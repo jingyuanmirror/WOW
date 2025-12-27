@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, XCircle } from 'lucide-react';
 
-export function Newsletter() {
+function Newsletter() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -138,3 +138,5 @@ export function Newsletter() {
     </section>
   );
 }
+
+export default Newsletter;

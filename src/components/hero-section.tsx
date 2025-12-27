@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, PlayCircle, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export function HeroSection() {
+function HeroSection() {
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -105,7 +105,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          专业设计 | 极致美观 | 简单易用 | 10万+玩家的选择
+          专业设计 | 极致美观 | 简单易用
         </motion.p>
 
         {/* CTA Buttons */}
@@ -149,11 +149,6 @@ export function HeroSection() {
             <span className="text-3xl font-bold text-gray-200">50+</span>
             <span className="text-sm">精品皮肤</span>
           </div>
-          <div className="hidden h-8 w-px bg-gray-700 sm:block" />
-          <div className="flex items-center gap-2">
-            <span className="text-3xl font-bold text-gray-200">4.9/5.0</span>
-            <span className="text-sm">用户评分</span>
-          </div>
         </motion.div>
       </div>
 
@@ -174,3 +169,5 @@ export function HeroSection() {
     </section>
   );
 }
+
+export default HeroSection;

@@ -42,7 +42,7 @@ const FEATURES = [
   },
 ];
 
-export function FeatureHighlight() {
+function FeatureHighlight() {
   return (
     <section className="bg-gradient-to-b from-black via-gray-950 to-black py-24">
       <div className="container mx-auto px-4">
@@ -91,3 +91,5 @@ export function FeatureHighlight() {
     </section>
   );
 }
+
+export default FeatureHighlight;

@@ -25,7 +25,7 @@ const STEPS = [
   },
 ];
 
-export function GettingStarted() {
+function GettingStarted() {
   return (
     <section className="bg-gradient-to-b from-black via-gray-900 to-black py-24">
       <div className="container mx-auto px-4">
@@ -126,3 +126,5 @@ export function GettingStarted() {
     </section>
   );
 }
+
+export default GettingStarted;

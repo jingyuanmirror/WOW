@@ -55,7 +55,7 @@ const TESTIMONIALS = [
   },
 ];
 
-export function Testimonials() {
+function Testimonials() {
   return (
     <section className="bg-gradient-to-b from-black via-gray-950 to-black py-24">
       <div className="container mx-auto px-4">
@@ -144,3 +144,5 @@ function CheckCircle({ className }: { className?: string }) {
     </svg>
   );
 }
+
+export default Testimonials;

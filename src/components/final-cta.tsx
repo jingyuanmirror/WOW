@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
-export function FinalCTA() {
+function FinalCTA() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black py-24">
       {/* Animated background */}
@@ -97,3 +97,5 @@ export function FinalCTA() {
     </section>
   );
 }
+
+export default FinalCTA;

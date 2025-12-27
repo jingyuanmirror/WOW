@@ -168,31 +168,9 @@ function FeaturedSkins() {
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="mb-2 text-2xl font-bold text-white">{skin.name}</h3>
-                  <p className="mb-4 line-clamp-2 text-sm text-gray-400">
+                  <p className="mb-6 line-clamp-2 text-sm text-gray-400">
                     {skin.description}
                   </p>
-
-                  {/* Features */}
-                  <div className="mb-4 flex gap-3">
-                    <div className="group/icon relative">
-                      <Sparkles className="h-5 w-5 text-yellow-500" />
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover/icon:opacity-100">
-                        高度自定义
-                      </span>
-                    </div>
-                    <div className="group/icon relative">
-                      <Zap className="h-5 w-5 text-blue-500" />
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover/icon:opacity-100">
-                        性能优化
-                      </span>
-                    </div>
-                    <div className="group/icon relative">
-                      <Smartphone className="h-5 w-5 text-green-500" />
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover/icon:opacity-100">
-                        多分辨率适配
-                      </span>
-                    </div>
-                  </div>
 
                   {/* Price and Actions */}
                   <div className="flex items-center justify-between">

@@ -34,33 +34,6 @@ const FEATURED_SKINS = [
     image: '/images/skin-3.jpg',
     features: ['高度自定��', '性能优化', '多分辨率适配'],
   },
-  {
-    id: 4,
-    name: '冰霜纪元',
-    description: '极简设计风格，适合专注游戏的玩家',
-    price: 0,
-    quality: 'rare',
-    image: '/images/skin-4.jpg',
-    features: ['高度自定义', '性能优化', '多分辨率适配'],
-  },
-  {
-    id: 5,
-    name: '翡翠梦境',
-    description: '自然系主题，适合德鲁伊职业',
-    price: 22.99,
-    quality: 'epic',
-    image: '/images/skin-5.jpg',
-    features: ['高度自定义', '性能优化', '多分辨率适配'],
-  },
-  {
-    id: 6,
-    name: '虚空领主',
-    description: '暗黑风格，突出暗影系技能特效',
-    price: 24.99,
-    quality: 'legendary',
-    image: '/images/skin-6.jpg',
-    features: ['高度自定义', '性能优化', '多分辨率适配'],
-  },
 ];
 
 const QUALITY_COLORS = {

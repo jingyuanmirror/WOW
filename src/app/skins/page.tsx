@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 interface SkinsPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-function parseSearchParams(searchParams: SkinsPageProps['searchParams']): SkinFilterParams {
+function parseSearchParams(searchParams: { [key: string]: string | string[] | undefined }): SkinFilterParams {
   return {
     versions: searchParams.versions
       ? (searchParams.versions as string).split(',') as any
@@ -58,7 +58,8 @@ async function getSkinsData(filters: SkinFilterParams) {
 }
 
 export default async function SkinsPage({ searchParams }: SkinsPageProps) {
-  const filters = parseSearchParams(searchParams);
+  const params = await searchParams;
+  const filters = parseSearchParams(params);
   const { skins, total, totalSkins, allTags } = await getSkinsData(filters);
 
   return (

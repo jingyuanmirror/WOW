@@ -92,20 +92,13 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
         <div className="p-4 flex-1 flex flex-col">
           {/* 标题 */}
           <h3
-            className={`text-lg font-bold mb-1 line-clamp-2 ${getQualityTextClass(
+            className={`text-lg font-bold mb-3 line-clamp-2 ${getQualityTextClass(
               skin.quality
             )}`}
             title={skin.name}
           >
             {skin.name}
           </h3>
-
-          {/* 作者信息 */}
-          {skin.author && (
-            <p className="text-xs text-zinc-500 mb-3">
-              by {skin.author.name}
-            </p>
-          )}
 
           {/* 互动数据 */}
           <div className="flex items-center gap-4 text-xs text-zinc-400 mb-3">

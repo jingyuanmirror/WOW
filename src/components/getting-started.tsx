@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Download, FolderOpen, CheckCircle, PlayCircle } from 'lucide-react';
+import { Download, FolderOpen, CheckCircle } from 'lucide-react';
 
 const STEPS = [
   {
@@ -114,13 +114,7 @@ function GettingStarted() {
 
           <span className="text-gray-600">|</span>
 
-          <Button
-            variant="link"
-            className="text-lg text-gray-400 hover:text-gray-200"
-          >
-            <PlayCircle className="mr-2 h-5 w-5" />
-            观看视频教程
-          </Button>
+          {/* 观看视频教程 按钮已移除 */}
         </motion.div>
       </div>
     </section>

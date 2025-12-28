@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight, PlayCircle, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 function HeroSection() {
@@ -123,14 +123,7 @@ function HeroSection() {
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
 
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-2 border-gray-600/50 bg-black/30 px-8 py-6 text-lg font-bold text-gray-200 backdrop-blur-sm transition-all hover:border-gray-500 hover:bg-gray-800/50"
-          >
-            <PlayCircle className="mr-2 h-5 w-5" />
-            观看演示视频
-          </Button>
+          {/* 观看演示视频 按钮已移除 */}
         </motion.div>
 
         {/* Social Proof */}

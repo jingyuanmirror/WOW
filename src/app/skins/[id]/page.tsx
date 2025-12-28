@@ -14,7 +14,9 @@ import {
   Calendar,
   User,
   Tag,
-  Star
+  Star,
+  Image as ImageIcon,
+  Video
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -142,39 +144,37 @@ export default function SkinDetailPage() {
         </Button>
       </div>
 
-      <div className="container mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* 左侧：媒体展示 */}
-          <div className="lg:col-span-2">
-            <Card className="bg-zinc-900/50 border-zinc-800 overflow-hidden">
-              {/* 标签切换 */}
-              {hasVideo && (
-                <div className="flex border-b border-zinc-800">
-                  <button
-                    onClick={() => setActiveTab('images')}
-                    className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${
-                      activeTab === 'images'
-                        ? 'bg-zinc-800 text-white'
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    📷 图片展示 ({images.length})
-                  </button>
-                  <button
+      <div className="container mx-auto px-4 pb-20 max-w-7xl">
+        <div className="flex flex-col lg:flex-row gap-0">
+          {/* 左侧：媒体展示 - 扩大预览区，严格参考首页预览效果 */}
+          <div className="flex-1 min-w-0 bg-black/80">
+            <Card className="bg-transparent border-0 overflow-hidden shadow-none">
+              {/* 标签切换 - 参考首页样式 */}
+              <div className="flex gap-2 p-4 justify-center">
+                <Button
+                  size="sm"
+                  variant={activeTab === 'images' ? 'default' : 'outline'}
+                  onClick={() => setActiveTab('images')}
+                  className="min-w-[100px]"
+                >
+                  <ImageIcon className="w-4 h-4 mr-2" />
+                  图片
+                </Button>
+                {hasVideo && (
+                  <Button
+                    size="sm"
+                    variant={activeTab === 'video' ? 'default' : 'outline'}
                     onClick={() => setActiveTab('video')}
-                    className={`flex-1 px-6 py-3 text-sm font-medium transition-colors ${
-                      activeTab === 'video'
-                        ? 'bg-zinc-800 text-white'
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
+                    className="min-w-[100px]"
                   >
-                    🎬 视频演示
-                  </button>
-                </div>
-              )}
+                    <Video className="w-4 h-4 mr-2" />
+                    演示视频
+                  </Button>
+                )}
+              </div>
 
-              {/* 媒体内容 */}
-              <div className="p-6">
+              {/* 媒体内容 - 更大的预览区域 */}
+              <div className="w-full px-4 pb-4">
                 {activeTab === 'images' ? (
                   <ImageCarousel images={skin.media?.images || []} />
                 ) : (
@@ -183,91 +183,72 @@ export default function SkinDetailPage() {
               </div>
             </Card>
 
-            {/* 详细描述 */}
-            <Card className="bg-zinc-900/50 border-zinc-800 mt-6 p-6">
-              <h2 className="text-2xl font-bold text-white mb-4">详细介绍</h2>
-              <p className="text-zinc-300 leading-relaxed mb-6">
-                {skin.description}
-              </p>
-
-              {skin.features && skin.features.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-3">主要特性</h3>
-                  <ul className="space-y-2">
-                    {skin.features.map((feature, index) => (
-                      <li key={index} className="flex items-start text-zinc-300">
-                        <Star className="w-5 h-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </Card>
           </div>
 
-          {/* 右侧：信息面板 */}
-          <div className="space-y-6">
+          {/* 右侧：信息面板 - 严格参考首页宽度 260px */}
+          <div className="w-full lg:w-[260px] lg:flex-shrink-0 border-l border-zinc-800 bg-zinc-950/80">
+            <div className="space-y-4">
             {/* 基本信息卡片 */}
-            <Card className="bg-zinc-900/50 border-zinc-800 p-6">
+            <Card className="bg-transparent border-0 p-4">
               {/* 标题和品质 */}
-              <div className="mb-4">
-                <h1 className={`text-3xl font-bold mb-2 ${getQualityTextClass(skin.quality)}`}>
-                  {skin.name}
-                </h1>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+              <div className="mb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-white">
                     {skin.quality === 'epic' ? '史诗' : skin.quality === 'legendary' ? '传说' : '精良'}
                   </span>
-                  <div className="flex items-center text-amber-500">
-                    <Star className="w-4 h-4 fill-current mr-1" />
-                    <span className="font-semibold">{skin.rating}</span>
-                    <span className="text-xs text-zinc-400 ml-1">({skin.reviews})</span>
-                  </div>
+                </div>
+                <h1 className={`text-xl font-bold mb-2 ${getQualityTextClass(skin.quality)}`}>
+                  {skin.name}
+                </h1>
+                <div className="flex items-center text-amber-500">
+                  <Star className="w-4 h-4 fill-current mr-1" />
+                  <span className="font-semibold">{skin.rating}</span>
+                  <span className="text-xs text-zinc-400 ml-1">({skin.reviews})</span>
                 </div>
               </div>
 
               {/* 统计数据 */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="flex items-center gap-2 text-sm">
+              <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
+                <div className="flex items-center gap-2">
                   <Heart className={`w-4 h-4 ${isLiked ? 'text-red-500 fill-current' : 'text-zinc-400'}`} />
                   <span className="text-zinc-300">{formatNumber(likes)}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2">
                   <Eye className="w-4 h-4 text-zinc-400" />
                   <span className="text-zinc-300">{formatNumber(skin.stats?.views || 0)}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2">
                   <Download className="w-4 h-4 text-zinc-400" />
                   <span className="text-zinc-300">{formatNumber(skin.downloads || 0)}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2">
                   <MessageCircle className="w-4 h-4 text-zinc-400" />
                   <span className="text-zinc-300">{formatNumber(skin.stats?.comments || 0)}</span>
                 </div>
               </div>
 
               {/* 操作按钮 */}
-              <div className="space-y-3">
-                <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium">
+              <div className="space-y-2">
+                <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium text-sm py-2">
                   <Download className="w-4 h-4 mr-2" />
                   下载皮肤
                 </Button>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                   <Button
                     variant="outline"
+                    size="sm"
                     onClick={toggleLike}
-                    className={`border-zinc-700 ${
+                    className={`border-zinc-700 text-xs ${
                       isLiked
                         ? 'bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30'
                         : 'text-zinc-300 hover:bg-zinc-800'
                     }`}
                   >
-                    <Heart className={`w-4 h-4 mr-2 ${isLiked ? 'fill-current' : ''}`} />
+                    <Heart className={`w-3 h-3 mr-1 ${isLiked ? 'fill-current' : ''}`} />
                     {isLiked ? '已喜欢' : '喜欢'}
                   </Button>
-                  <Button variant="outline" className="border-zinc-700 text-zinc-300 hover:bg-zinc-800">
-                    <Share2 className="w-4 h-4 mr-2" />
+                  <Button variant="outline" size="sm" className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 text-xs">
+                    <Share2 className="w-3 h-3 mr-1" />
                     分享
                   </Button>
                 </div>
@@ -275,13 +256,13 @@ export default function SkinDetailPage() {
             </Card>
 
             {/* 版本支持 */}
-            <Card className="bg-zinc-900/50 border-zinc-800 p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">支持版本</h3>
+            <Card className="bg-transparent border-0 px-4 pb-4">
+              <h3 className="text-sm font-semibold text-white mb-2">支持版本</h3>
               <div className="flex flex-wrap gap-2">
                 {skin.versions.map((version) => (
                   <span
                     key={version}
-                    className={`px-3 py-1 rounded-full text-sm border ${getVersionColor(version)}`}
+                    className={`px-2 py-1 rounded-full text-xs border ${getVersionColor(version)}`}
                   >
                     {version === 'retail' ? '正式服' : version === 'classic' ? '60版' : '80版'}
                   </span>
@@ -290,16 +271,16 @@ export default function SkinDetailPage() {
             </Card>
 
             {/* 标签 */}
-            <Card className="bg-zinc-900/50 border-zinc-800 p-6">
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                <Tag className="w-4 h-4 mr-2" />
+            <Card className="bg-transparent border-0 px-4 pb-4">
+              <h3 className="text-sm font-semibold text-white mb-2 flex items-center">
+                <Tag className="w-3 h-3 mr-1" />
                 标签
               </h3>
               <div className="flex flex-wrap gap-2">
                 {skin.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 rounded-full text-sm bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 hover:border-zinc-600 cursor-pointer transition-colors"
+                    className="px-2 py-1 rounded-full text-xs bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 hover:border-zinc-600 cursor-pointer transition-colors"
                   >
                     {tag}
                   </span>
@@ -309,30 +290,30 @@ export default function SkinDetailPage() {
 
             {/* 作者信息 */}
             {skin.author && (
-              <Card className="bg-zinc-900/50 border-zinc-800 p-6">
-                <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <User className="w-4 h-4 mr-2" />
+              <Card className="bg-transparent border-0 px-4 pb-4">
+                <h3 className="text-sm font-semibold text-white mb-2 flex items-center">
+                  <User className="w-3 h-3 mr-1" />
                   作者
                 </h3>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-xl">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-lg">
                     👤
                   </div>
                   <div>
-                    <div className="font-medium text-white">{skin.author.name}</div>
-                    <div className="text-sm text-zinc-400">UI设计师</div>
+                    <div className="font-medium text-white text-sm">{skin.author.name}</div>
+                    <div className="text-xs text-zinc-400">UI设计师</div>
                   </div>
                 </div>
               </Card>
             )}
 
             {/* 更新时间 */}
-            <Card className="bg-zinc-900/50 border-zinc-800 p-6">
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                <Calendar className="w-4 h-4 mr-2" />
+            <Card className="bg-transparent border-0 px-4 pb-4">
+              <h3 className="text-sm font-semibold text-white mb-2 flex items-center">
+                <Calendar className="w-3 h-3 mr-1" />
                 更新信息
               </h3>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span className="text-zinc-400">创建时间</span>
                   <span className="text-zinc-300">{formatRelativeTime(skin.createdAt || '')}</span>
@@ -343,8 +324,31 @@ export default function SkinDetailPage() {
                 </div>
               </div>
             </Card>
+            </div>
           </div>
         </div>
+
+        {/* 详细描述 - 移到底部全宽显示 */}
+        <Card className="bg-zinc-900/50 border-zinc-800 mt-8 p-6 max-w-7xl">
+          <h2 className="text-2xl font-bold text-white mb-4">详细介绍</h2>
+          <p className="text-zinc-300 leading-relaxed mb-6">
+            {skin.description}
+          </p>
+
+          {skin.features && skin.features.length > 0 && (
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-3">主要特性</h3>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {skin.features.map((feature, index) => (
+                  <li key={index} className="flex items-start text-zinc-300">
+                    <Star className="w-5 h-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </Card>
       </div>
     </div>
   );

@@ -1,10 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { Eye, ShoppingCart, Sparkles, Zap, Smartphone } from 'lucide-react';
+import { Eye, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
+import SkinPreviewModal from './skin-preview-modal';
+import ImageCarousel from './image-carousel';
+import VideoPlayer from './video-player';
+import SkinInfoPanel from './skin-info-panel';
 
 const FEATURED_SKINS = [
   {
@@ -13,7 +18,11 @@ const FEATURED_SKINS = [
     description: '专为竞技场PvP设计，突出技能冷却和敌方施法条',
     price: 19.99,
     quality: 'legendary',
-    image: '/images/skin-1.jpg',
+    images: [
+      { url: '/images/skin-1-1.webp', alt: '暗影之刃主界面' },
+      { url: '/images/skin-1-2.webp', alt: '暗影之刃战斗界面' },
+    ],
+    video: '/videos/skin-1-demo.mp4',
     features: ['高度自定义', '性能优化', '多分辨率适配'],
   },
   {
@@ -22,7 +31,11 @@ const FEATURED_SKINS = [
     description: '治疗专精界面，清晰的团队框架和法术监控',
     price: 24.99,
     quality: 'epic',
-    image: '/images/skin-2.jpg',
+    images: [
+      { url: '/images/skin-2-1.webp', alt: '圣光守护主界面' },
+      { url: '/images/skin-2-2.webp', alt: '圣光守护团队界面' },
+    ],
+    video: '/videos/skin-2-demo.mp4',
     features: ['高度自定义', '性能优化', '多分辨率适配'],
   },
   {
@@ -31,8 +44,12 @@ const FEATURED_SKINS = [
     description: 'DPS输出专用，伤害统计和增益监控一目了然',
     price: 19.99,
     quality: 'epic',
-    image: '/images/skin-3.jpg',
-    features: ['高度自定��', '性能优化', '多分辨率适配'],
+    images: [
+      { url: '/images/skin-3-1.webp', alt: '狂怒之心主界面' },
+      { url: '/images/skin-3-2.webp', alt: '狂怒之心输出界面' },
+    ],
+    video: '/videos/skin-3-demo.mp4',
+    features: ['高度自定义', '性能优化', '多分辨率适配'],
   },
 ];
 
@@ -63,7 +80,11 @@ const getThemeColors = (skinId: number) => {
   return themes[(skinId - 1) % themes.length];
 };
 
+
 function FeaturedSkins() {
+  const [previewSkin, setPreviewSkin] = useState<null | typeof FEATURED_SKINS[0]>(null);
+  const [previewTab, setPreviewTab] = useState<'image' | 'video'>('image');
+
   return (
     <section className="bg-gradient-to-b from-black via-gray-900 to-black py-24">
       <div className="container mx-auto px-4">
@@ -91,73 +112,18 @@ function FeaturedSkins() {
             >
               <Card className="group overflow-hidden border-gray-800 bg-gray-900/50 backdrop-blur-sm transition-all hover:-translate-y-2 hover:border-gray-700 hover:shadow-2xl hover:shadow-gray-600/10">
                 {/* Image */}
-                <div className="relative aspect-video overflow-hidden">
-                  {/* 模拟真实的魔兽世界UI界面截图背景 */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${getThemeColors(skin.id).bg}`}>
-                    {/* 模拟游戏界面元素 */}
-                    <div className="absolute inset-0 opacity-30">
-                      {/* 网格背景 */}
-                      <div className="absolute inset-0" style={{
-                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-                        backgroundSize: '20px 20px'
-                      }} />
-                    </div>
-                    
-                    {/* 模拟UI框架轮廓 */}
-                    <div className={`absolute left-4 top-4 h-12 w-32 rounded border border-${getThemeColors(skin.id).accent}/20 bg-black/40 backdrop-blur-sm`}>
-                      {/* 模拟玩家头像 */}
-                      <div className={`m-1 h-10 w-10 rounded-full border border-${getThemeColors(skin.id).accent}/30 bg-gradient-to-br from-gray-700 to-gray-800`} />
-                    </div>
-                    <div className={`absolute right-4 top-4 h-12 w-32 rounded border border-${getThemeColors(skin.id).accent}/20 bg-black/40 backdrop-blur-sm`}>
-                      {/* 模拟目标头像 */}
-                      <div className={`m-1 ml-auto h-10 w-10 rounded-full border border-red-500/30 bg-gradient-to-br from-red-900 to-gray-800`} />
-                    </div>
-                    <div className={`absolute bottom-4 left-1/2 h-16 w-64 -translate-x-1/2 rounded border border-${getThemeColors(skin.id).accent}/20 bg-black/40 backdrop-blur-sm`} />
-                    
-                    {/* 模拟技能图标 - 根据主题变色 */}
-                    <div className="absolute bottom-6 left-6 flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div
-                          key={i}
-                          className={`h-8 w-8 rounded border border-${getThemeColors(skin.id).accent}/40 bg-gradient-to-br from-${getThemeColors(skin.id).accent}/30 to-black/60 backdrop-blur-sm`}
-                          style={{
-                            boxShadow: `0 0 10px rgba(var(--${getThemeColors(skin.id).accent}), 0.3)`
-                          }}
-                        />
-                      ))}
-                    </div>
-                    
-                    {/* 模拟血条/能量条 - 使用主题色 */}
-                    <div className="absolute left-4 top-20 h-2 w-40 overflow-hidden rounded-full bg-black/60 shadow-inner">
-                      <div className={`h-full w-[85%] bg-gradient-to-r from-red-600 to-red-500 shadow-lg`} 
-                           style={{ boxShadow: '0 0 8px rgba(220, 38, 38, 0.6)' }} />
-                    </div>
-                    <div className="absolute left-4 top-24 h-2 w-40 overflow-hidden rounded-full bg-black/60 shadow-inner">
-                      <div className={`h-full w-[60%] bg-gradient-to-r from-${getThemeColors(skin.id).bar2} to-${getThemeColors(skin.id).bar1}`}
-                           style={{ boxShadow: `0 0 8px rgba(var(--${getThemeColors(skin.id).bar1}), 0.6)` }} />
-                    </div>
-                    
-                    {/* 中心光效 */}
-                    <div className={`absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-${getThemeColors(skin.id).accent}/10 blur-2xl`} />
-                    
-                    {/* 品质光效 */}
-                    <div className={`absolute inset-0 bg-gradient-to-t ${
-                      skin.quality === 'legendary' ? 'from-orange-500/10' :
-                      skin.quality === 'epic' ? 'from-purple-500/10' :
-                      'from-blue-500/10'
-                    } via-transparent to-transparent`} />
-                  </div>
-                  
+                <div className="relative aspect-video overflow-hidden cursor-pointer" onClick={() => { setPreviewSkin(skin); setPreviewTab('image'); }}>
+                  <img src={skin.images[0].url} alt={skin.images[0].alt} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                   <div className={`absolute left-4 top-4 rounded-full bg-gradient-to-r ${QUALITY_COLORS[skin.quality as keyof typeof QUALITY_COLORS]} px-3 py-1 text-xs font-bold text-white shadow-lg`}>
                     {QUALITY_LABELS[skin.quality as keyof typeof QUALITY_LABELS]}
                   </div>
-                  
                   {/* Quick View Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
                     <Button
                       variant="outline"
                       size="sm"
                       className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-black"
+                      onClick={e => { e.stopPropagation(); setPreviewSkin(skin); setPreviewTab('image'); }}
                     >
                       <Eye className="mr-2 h-4 w-4" />
                       快速预览
@@ -179,7 +145,7 @@ function FeaturedSkins() {
                         <span className="text-2xl font-bold text-green-400">免费</span>
                       ) : (
                         <span className="text-2xl font-bold text-gray-200">
-                          ${skin.price.toFixed(2)}
+                          ¥{skin.price.toFixed(2)}
                         </span>
                       )}
                     </div>
@@ -188,6 +154,7 @@ function FeaturedSkins() {
                         variant="outline"
                         size="sm"
                         className="border-gray-700 text-white hover:bg-white/10"
+                        onClick={() => { setPreviewSkin(skin); setPreviewTab('image'); }}
                       >
                         查看详情
                       </Button>
@@ -224,6 +191,41 @@ function FeaturedSkins() {
           </Link>
         </motion.div>
       </div>
+
+      {/* 皮肤预览弹窗 */}
+      <SkinPreviewModal open={!!previewSkin} onClose={() => setPreviewSkin(null)}>
+        {previewSkin && (
+          <div className="flex flex-col md:flex-row w-full">
+            {/* 左侧：图片轮播/视频 (扩大预览区) */}
+            <div className="flex-1 min-w-0 bg-black/80 flex flex-col items-center justify-center">
+              <div className="flex gap-2 p-4">
+                <Button size="sm" variant={previewTab === 'image' ? 'default' : 'outline'} onClick={() => setPreviewTab('image')}>图片</Button>
+                {previewSkin.video && <Button size="sm" variant={previewTab === 'video' ? 'default' : 'outline'} onClick={() => setPreviewTab('video')}>演示视频</Button>}
+              </div>
+              <div className="w-full px-4 pb-4">
+                {previewTab === 'image' ? (
+                  <ImageCarousel images={previewSkin.images} />
+                ) : (
+                  <VideoPlayer src={previewSkin.video} poster={previewSkin.images[0].url} />
+                )}
+              </div>
+            </div>
+            {/* 右侧：信息区（缩窄并弱化） */}
+            <div className="w-full md:w-[260px] border-l border-zinc-800 bg-zinc-950/80">
+              <SkinInfoPanel
+                name={previewSkin.name}
+                quality={previewSkin.quality}
+                description={previewSkin.description}
+                price={previewSkin.price}
+                features={previewSkin.features}
+                onBuy={() => {}}
+                onDetail={() => {}}
+                compact
+              />
+            </div>
+          </div>
+        )}
+      </SkinPreviewModal>
     </section>
   );
 }

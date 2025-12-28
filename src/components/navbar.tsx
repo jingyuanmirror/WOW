@@ -25,6 +25,12 @@ function Navbar() {
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             <Link 
+              href="/" 
+              className="text-zinc-300 hover:text-yellow-400 transition-colors duration-200 font-medium"
+            >
+              首页
+            </Link>
+            <Link 
               href="/skins" 
               className="text-zinc-300 hover:text-yellow-400 transition-colors duration-200 font-medium"
             >

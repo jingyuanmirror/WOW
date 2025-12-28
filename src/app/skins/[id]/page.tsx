@@ -48,18 +48,20 @@ const getSkinById = (id: string): Skin | null => {
     tags: ['界面', '任务', 'PvE', 'PvP'],
     downloads: 12580,
     rating: 4.8,
-    reviewCount: 256,
-    createdAt: new Date('2024-01-15'),
-    updatedAt: new Date('2024-12-20'),
+    reviews: 256,
+    createdAt: '2024-01-15',
+    updatedAt: '2024-12-20',
     image: '/images/skin-1-1.webp',
     media: {
       thumbnail: '/images/skin-1-1.webp',
       images: [
-        { url: '/images/skin-1-1.webp', alt: '主界面展示' },
-        { url: '/images/skin-1-2.webp', alt: '战斗界面' },
-        { url: '/images/skin-2-1.webp', alt: '团队框架' },
+        { url: '/images/skin-1-1.webp', width: 1920, height: 1080, alt: '主界面展示' },
+        { url: '/images/skin-1-2.webp', width: 1920, height: 1080, alt: '战斗界面' },
+        { url: '/images/skin-2-1.webp', width: 1920, height: 1080, alt: '团队框架' },
       ],
-      videos: ['/videos/skin-1-demo.mp4']
+      videos: [
+        { url: '/videos/skin-1-demo.mp4', thumbnail: '/images/skin-1-1.webp', duration: 120 }
+      ]
     },
     stats: {
       likes: 3420,
@@ -174,9 +176,9 @@ export default function SkinDetailPage() {
               {/* 媒体内容 */}
               <div className="p-6">
                 {activeTab === 'images' ? (
-                  <ImageCarousel images={images} />
+                  <ImageCarousel images={skin.media?.images || []} />
                 ) : (
-                  <VideoPlayer src={skin.media?.videos?.[0] || ''} />
+                  <VideoPlayer src={skin.media?.videos?.[0]?.url || ''} />
                 )}
               </div>
             </Card>
@@ -220,7 +222,7 @@ export default function SkinDetailPage() {
                   <div className="flex items-center text-amber-500">
                     <Star className="w-4 h-4 fill-current mr-1" />
                     <span className="font-semibold">{skin.rating}</span>
-                    <span className="text-xs text-zinc-400 ml-1">({skin.reviewCount})</span>
+                    <span className="text-xs text-zinc-400 ml-1">({skin.reviews})</span>
                   </div>
                 </div>
               </div>
@@ -237,7 +239,7 @@ export default function SkinDetailPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Download className="w-4 h-4 text-zinc-400" />
-                  <span className="text-zinc-300">{formatNumber(skin.downloads)}</span>
+                  <span className="text-zinc-300">{formatNumber(skin.downloads || 0)}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <MessageCircle className="w-4 h-4 text-zinc-400" />
@@ -333,11 +335,11 @@ export default function SkinDetailPage() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-zinc-400">创建时间</span>
-                  <span className="text-zinc-300">{formatRelativeTime(skin.createdAt)}</span>
+                  <span className="text-zinc-300">{formatRelativeTime(skin.createdAt || '')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-zinc-400">最后更新</span>
-                  <span className="text-zinc-300">{formatRelativeTime(skin.updatedAt)}</span>
+                  <span className="text-zinc-300">{formatRelativeTime(skin.updatedAt || '')}</span>
                 </div>
               </div>
             </Card>

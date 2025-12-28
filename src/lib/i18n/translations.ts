@@ -13,8 +13,8 @@ export const translations = {
 
     // Hero Section
     hero: {
-      title: '专业魔兽世界UI设计师',
-      subtitle: '提供超过50+款精心设计的UI皮肤，覆盖PvP/PvE各种玩法风格',
+      title: '重新定义你的战斗体验',
+      subtitle: '专业设计 | 极致美观 | 简单易用',
       cta: '查看全部作品',
       viewDemo: '观看演示视频',
       stats: {
@@ -149,8 +149,8 @@ export const translations = {
 
     // Hero Section
     hero: {
-      title: 'Professional WoW UI Designer',
-      subtitle: 'Over 50+ carefully crafted UI skins, covering PvP/PvE gameplay styles',
+      title: 'Redefine Your Combat Experience',
+      subtitle: 'Professional Design | Stunning Aesthetics | Easy to Use',
       cta: 'View All Works',
       viewDemo: 'Watch Demo',
       stats: {

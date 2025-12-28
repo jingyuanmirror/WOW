@@ -34,14 +34,14 @@ export default function SkinPreviewModal({ open, onClose, children }: SkinPrevie
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           {/* 遮罩层 */}
           <motion.div
-            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -49,7 +49,7 @@ export default function SkinPreviewModal({ open, onClose, children }: SkinPrevie
           />
           {/* 内容层 */}
           <motion.div
-            className="relative z-10 w-full max-w-7xl mx-auto bg-zinc-950 rounded-2xl shadow-2xl overflow-hidden"
+            className="relative z-10 w-full max-w-7xl mx-auto bg-zinc-950 rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}

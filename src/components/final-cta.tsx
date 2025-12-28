@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 function FinalCTA() {
+  const { t } = useTranslation();
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black py-24">
       {/* Animated background */}
@@ -58,12 +60,12 @@ function FinalCTA() {
 
           {/* Title */}
           <h2 className="mb-6 text-5xl font-bold text-white md:text-6xl">
-            准备好升级你的游戏界面了吗？
+            {t('cta.title')}
           </h2>
 
           {/* Subtitle */}
           <p className="mb-12 text-xl text-gray-300 md:text-2xl">
-            立即加入10万+玩家的行列，开启全新的魔兽世界体验
+            {t('cta.subtitle')}
           </p>
 
           {/* Buttons */}
@@ -73,7 +75,7 @@ function FinalCTA() {
                 size="lg"
                 className="group bg-gradient-to-r from-gray-700 to-gray-800 px-10 py-7 text-lg font-bold text-white shadow-2xl transition-all hover:scale-105 hover:from-gray-600 hover:to-gray-700"
               >
-                浏览皮肤作品
+                {t('cta.explore')}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
@@ -84,7 +86,7 @@ function FinalCTA() {
                 variant="outline"
                 className="border-2 border-gray-600 bg-transparent px-10 py-7 text-lg font-bold text-gray-200 transition-all hover:border-gray-500 hover:bg-gray-800/50"
               >
-                免费试用
+                {t('cta.contact')}
               </Button>
             </Link>
           </div>

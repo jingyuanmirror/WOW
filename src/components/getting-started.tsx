@@ -3,29 +3,31 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Download, FolderOpen, CheckCircle } from 'lucide-react';
-
-const STEPS = [
-  {
-    number: '01',
-    icon: Download,
-    title: '选择并下载',
-    description: '浏览作品集，选择喜欢的皮肤，完成购买后立即获得下载链接',
-  },
-  {
-    number: '02',
-    icon: FolderOpen,
-    title: '安装到游戏',
-    description: '解压文件，复制到魔兽世界的 Interface/AddOns 目录',
-  },
-  {
-    number: '03',
-    icon: CheckCircle,
-    title: '启用并享受',
-    description: '启动游戏，在插件列表中启用，开始你的全新界面体验',
-  },
-];
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 function GettingStarted() {
+  const { t } = useTranslation();
+
+  const STEPS = [
+    {
+      number: '01',
+      icon: Download,
+      title: t('installation.step1.title'),
+      description: t('installation.step1.description'),
+    },
+    {
+      number: '02',
+      icon: FolderOpen,
+      title: t('installation.step2.title'),
+      description: t('installation.step2.description'),
+    },
+    {
+      number: '03',
+      icon: CheckCircle,
+      title: t('installation.step3.title'),
+      description: t('installation.step3.description'),
+    },
+  ];
   return (
     <section className="bg-gradient-to-b from-black via-gray-900 to-black py-24">
       <div className="container mx-auto px-4">
@@ -37,8 +39,8 @@ function GettingStarted() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="mb-4 text-5xl font-bold text-white">三步开始使用</h2>
-          <p className="text-xl text-gray-400">简单易用，5分钟完成安装</p>
+          <h2 className="mb-4 text-5xl font-bold text-white">{t('installation.title')}</h2>
+          <p className="text-xl text-gray-400">{t('installation.subtitle')}</p>
         </motion.div>
 
         {/* Steps */}
@@ -109,7 +111,7 @@ function GettingStarted() {
             variant="link"
             className="text-lg text-gray-400 hover:text-gray-200"
           >
-            查看详细安装文档 →
+            {t('common.learnMore')} →
           </Button>
 
           <span className="text-gray-600">|</span>

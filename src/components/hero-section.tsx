@@ -3,8 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 function HeroSection() {
+  const { t } = useTranslation();
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -95,7 +97,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent drop-shadow-2xl">
-            重新定义你的战斗体验
+            {t('hero.title')}
           </span>
         </motion.h1>
 
@@ -105,7 +107,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          专业设计 | 极致美观 | 简单易用
+          {t('hero.subtitle')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -119,7 +121,7 @@ function HeroSection() {
             size="lg"
             className="group bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-6 text-lg font-bold text-white shadow-2xl shadow-orange-500/50 transition-all hover:scale-105 hover:shadow-orange-500/70"
           >
-            探索皮肤作品
+            {t('hero.cta')}
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
 
@@ -135,12 +137,12 @@ function HeroSection() {
         >
           <div className="flex items-center gap-2">
             <span className="text-3xl font-bold text-gray-200">100,000+</span>
-            <span className="text-sm">活跃用户</span>
+            <span className="text-sm">{t('hero.stats.activeUsers')}</span>
           </div>
           <div className="hidden h-8 w-px bg-gray-700 sm:block" />
           <div className="flex items-center gap-2">
             <span className="text-3xl font-bold text-gray-200">50+</span>
-            <span className="text-sm">精品皮肤</span>
+            <span className="text-sm">{t('hero.stats.totalSkins')}</span>
           </div>
         </motion.div>
       </div>
@@ -156,7 +158,7 @@ function HeroSection() {
           y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
         }}
       >
-        <span className="text-sm">探索更多</span>
+        <span className="text-sm">{t('common.viewMore')}</span>
         <ChevronDown className="h-6 w-6" />
       </motion.button>
     </section>

@@ -2,47 +2,49 @@
 
 import { motion } from 'framer-motion';
 import { Palette, Zap, Wrench, Monitor, RefreshCw, MessageCircle } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 const FEATURES = [
   {
     icon: Palette,
-    title: '专业美术设计',
-    description: '每一款皮肤都经过精心打磨，兼顾美观与实用性',
+    title: { zh: '专业美术设计', en: 'Professional Design' },
+    description: { zh: '每一款皮肤都经过精心打磨，兼顾美观与实用性', en: 'Every skin is carefully crafted, balancing beauty and practicality' },
     color: 'text-yellow-500',
   },
   {
     icon: Zap,
-    title: '轻量高效',
-    description: '优化代码，确保不影响游戏帧数，流畅运行',
+    title: { zh: '轻量高效', en: 'Lightweight & Efficient' },
+    description: { zh: '优化代码，确保不影响游戏帧数，流畅运行', en: 'Optimized code ensures smooth gameplay without affecting frame rate' },
     color: 'text-blue-500',
   },
   {
     icon: Wrench,
-    title: '灵活配置',
-    description: '提供丰富的自定义选项，打造专属于你的界面',
+    title: { zh: '灵活配置', en: 'Flexible Configuration' },
+    description: { zh: '提供丰富的自定义选项，打造专属于你的界面', en: 'Rich customization options to create your unique interface' },
     color: 'text-orange-500',
   },
   {
     icon: Monitor,
-    title: '完美适配',
-    description: '支持1080p到4K各种分辨率，自动缩放',
+    title: { zh: '完美适配', en: 'Perfect Compatibility' },
+    description: { zh: '支持1080p到4K各种分辨率，自动缩放', en: 'Supports all resolutions from 1080p to 4K with auto-scaling' },
     color: 'text-green-500',
   },
   {
     icon: RefreshCw,
-    title: '免费更新',
-    description: '跟随游戏版本更新，终身免费升级',
+    title: { zh: '免费更新', en: 'Free Updates' },
+    description: { zh: '跟随游戏版本更新，终身免费升级', en: 'Follow game version updates with lifetime free upgrades' },
     color: 'text-purple-500',
   },
   {
     icon: MessageCircle,
-    title: '活跃社区',
-    description: '专业客服和活跃社区，随时解答你的问题',
+    title: { zh: '活跃社区', en: 'Active Community' },
+    description: { zh: '专业客服和活跃社区，随时解答你的问题', en: 'Professional support and active community ready to help' },
     color: 'text-pink-500',
   },
 ];
 
 function FeatureHighlight() {
+  const { t, locale } = useTranslation();
   return (
     <section className="bg-gradient-to-b from-black via-gray-950 to-black py-24">
       <div className="container mx-auto px-4">
@@ -54,8 +56,8 @@ function FeatureHighlight() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="mb-4 text-5xl font-bold text-white">为什么选择我们的UI皮肤</h2>
-          <p className="text-xl text-gray-400">专业设计，极致体验</p>
+          <h2 className="mb-4 text-5xl font-bold text-white">{t('features.title')}</h2>
+          <p className="text-xl text-gray-400">{t('features.subtitle')}</p>
         </motion.div>
 
         {/* Features Grid */}
@@ -79,8 +81,8 @@ function FeatureHighlight() {
               </motion.div>
 
               {/* Content */}
-              <h3 className="mb-3 text-2xl font-bold text-white">{feature.title}</h3>
-              <p className="text-gray-400">{feature.description}</p>
+              <h3 className="mb-3 text-2xl font-bold text-white">{locale === 'en-US' ? feature.title.en : feature.title.zh}</h3>
+              <p className="text-gray-400">{locale === 'en-US' ? feature.description.en : feature.description.zh}</p>
 
               {/* Decorative gradient */}
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-gray-600/10 to-transparent opacity-0 blur-3xl transition-opacity group-hover:opacity-100" />

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Star } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 const TESTIMONIALS = [
   {
@@ -56,6 +57,7 @@ const TESTIMONIALS = [
 ];
 
 function Testimonials() {
+  const { t, locale } = useTranslation();
   return (
     <section className="bg-gradient-to-b from-black via-gray-950 to-black py-24">
       <div className="container mx-auto px-4">
@@ -67,8 +69,8 @@ function Testimonials() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="mb-4 text-5xl font-bold text-white">用户评价</h2>
-          <p className="text-xl text-gray-400">10万+玩家的选择与信赖</p>
+          <h2 className="mb-4 text-5xl font-bold text-white">{t('testimonials.title')}</h2>
+          <p className="text-xl text-gray-400">{t('testimonials.subtitle')}</p>
         </motion.div>
 
         {/* Testimonials Grid */}
@@ -116,7 +118,7 @@ function Testimonials() {
                 {/* Verified Badge */}
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs text-green-400">
                   <CheckCircle className="h-3 w-3" />
-                  已验证购买
+                  {locale === 'en-US' ? 'Verified Purchase' : '已验证购买'}
                 </div>
               </Card>
             </motion.div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from "next/link";
 import { 
   Star, Download, Users, Sparkles, ArrowRight, Palette, Zap, Settings, 
@@ -11,11 +12,19 @@ import { Card } from "@/components/ui/card";
 import { skins, designer, testimonials, installSteps } from "@/lib/data";
 import Navbar from "@/components/navbar";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { useLanguageStore } from "@/lib/stores/language-store";
 
 export default function HomePage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const featuredSkins = skins.filter(skin => skin.featured).slice(0, 6);
   
+  console.log('[HomePage] Rendering with locale:', locale);
+  
+  // Force re-render when locale changes
+  useEffect(() => {
+    console.log('[HomePage] Locale changed to:', locale);
+  }, [locale]);
+
   const stats = {
     activeUsers: "100,000+",
     totalSkins: "50+",
@@ -24,6 +33,22 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[url('/wow-bg.svg')] bg-cover bg-center bg-fixed" style={{backgroundColor: '#0b0b0b'}}>
+      {/* DEBUG INFO */}
+      <div style={{
+        position: 'fixed',
+        top: '100px',
+        right: '20px',
+        background: 'red',
+        color: 'white',
+        padding: '20px',
+        zIndex: 9999,
+        border: '3px solid yellow'
+      }}>
+        <div>Current Locale: {locale}</div>
+        <div>Hero Title: {t('hero.title')}</div>
+        <div>Component: home-page.tsx</div>
+      </div>
+      
       {/* 导航栏 */}
       <Navbar />
 
@@ -91,9 +116,7 @@ export default function HomePage() {
                     skin.quality === 'rare' ? 'bg-blue-500/90 text-white' :
                     'bg-green-500/90 text-white'
                   }`}>
-                    {skin.quality === 'legendary' ? '传说' :
-                     skin.quality === 'epic' ? '史诗' :
-                     skin.quality === 'rare' ? '精良' : '优秀'}
+                    {t(`quality.${skin.quality}` as any)}
                   </div>
 
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -103,11 +126,11 @@ export default function HomePage() {
 
                 <div className="p-6 space-y-4">
                   <h3 className="text-2xl font-bold text-white truncate">
-                    {skin.name}
+                    {locale === 'en-US' ? (skin as any).nameEn || skin.name : skin.name}
                   </h3>
 
                   <p className="text-sm text-zinc-400 line-clamp-2 min-h-[40px]">
-                    {skin.description}
+                    {locale === 'en-US' ? (skin as any).descriptionEn || skin.description : skin.description}
                   </p>
 
                   <div className="flex items-center justify-between pt-4 border-t border-zinc-800">

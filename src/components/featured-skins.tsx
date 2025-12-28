@@ -10,12 +10,15 @@ import SkinPreviewModal from './skin-preview-modal';
 import ImageCarousel from './image-carousel';
 import VideoPlayer from './video-player';
 import SkinInfoPanel from './skin-info-panel';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 const FEATURED_SKINS = [
   {
     id: 1,
     name: '暗影之刃',
+    nameEn: 'Shadow Blade',
     description: '专为竞技场PvP设计，突出技能冷却和敌方施法条',
+    descriptionEn: 'Designed for arena PvP, highlights skill cooldowns and enemy cast bars',
     price: 19.99,
     quality: 'legendary',
     images: [
@@ -28,7 +31,9 @@ const FEATURED_SKINS = [
   {
     id: 2,
     name: '圣光守护',
+    nameEn: 'Holy Guardian',
     description: '治疗专精界面，清晰的团队框架和法术监控',
+    descriptionEn: 'Healing specialization interface with clear raid frames and spell monitoring',
     price: 24.99,
     quality: 'epic',
     images: [
@@ -41,7 +46,9 @@ const FEATURED_SKINS = [
   {
     id: 3,
     name: '狂怒之心',
+    nameEn: 'Fury Heart',
     description: 'DPS输出专用，伤害统计和增益监控一目了然',
+    descriptionEn: 'DPS-focused interface with clear damage stats and buff monitoring',
     price: 19.99,
     quality: 'epic',
     images: [
@@ -61,10 +68,10 @@ const QUALITY_COLORS = {
 };
 
 const QUALITY_LABELS = {
-  legendary: '传说',
-  epic: '史诗',
-  rare: '精良',
-  uncommon: '优秀',
+  legendary: { zh: '传说', en: 'Legendary' },
+  epic: { zh: '史诗', en: 'Epic' },
+  rare: { zh: '精良', en: 'Rare' },
+  uncommon: { zh: '优秀', en: 'Uncommon' },
 };
 
 // 根据皮肤ID生成不同的UI主题色
@@ -82,6 +89,7 @@ const getThemeColors = (skinId: number) => {
 
 
 function FeaturedSkins() {
+  const { t, locale } = useTranslation();
   const [previewSkin, setPreviewSkin] = useState<null | typeof FEATURED_SKINS[0]>(null);
   const [previewTab, setPreviewTab] = useState<'image' | 'video'>('image');
 
@@ -96,8 +104,8 @@ function FeaturedSkins() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="mb-4 text-5xl font-bold text-white">精选作品</h2>
-          <p className="text-xl text-gray-400">专为不同职业和玩法风格打造</p>
+          <h2 className="mb-4 text-5xl font-bold text-white">{t('featuredSkins.title')}</h2>
+          <p className="text-xl text-gray-400">{t('featuredSkins.subtitle')}</p>
         </motion.div>
 
         {/* Skins Grid */}
@@ -115,7 +123,7 @@ function FeaturedSkins() {
                 <div className="relative aspect-video overflow-hidden cursor-pointer" onClick={() => { setPreviewSkin(skin); setPreviewTab('image'); }}>
                   <img src={skin.images[0].url} alt={skin.images[0].alt} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                   <div className={`absolute left-4 top-4 rounded-full bg-gradient-to-r ${QUALITY_COLORS[skin.quality as keyof typeof QUALITY_COLORS]} px-3 py-1 text-xs font-bold text-white shadow-lg`}>
-                    {QUALITY_LABELS[skin.quality as keyof typeof QUALITY_LABELS]}
+                    {locale === 'en-US' ? QUALITY_LABELS[skin.quality as keyof typeof QUALITY_LABELS].en : QUALITY_LABELS[skin.quality as keyof typeof QUALITY_LABELS].zh}
                   </div>
                   {/* Quick View Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
@@ -126,23 +134,23 @@ function FeaturedSkins() {
                       onClick={e => { e.stopPropagation(); setPreviewSkin(skin); setPreviewTab('image'); }}
                     >
                       <Eye className="mr-2 h-4 w-4" />
-                      快速预览
+                      {t('featuredSkins.preview')}
                     </Button>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="mb-2 text-2xl font-bold text-white">{skin.name}</h3>
+                  <h3 className="mb-2 text-2xl font-bold text-white">{locale === 'en-US' ? (skin as any).nameEn || skin.name : skin.name}</h3>
                   <p className="mb-6 line-clamp-2 text-sm text-gray-400">
-                    {skin.description}
+                    {locale === 'en-US' ? (skin as any).descriptionEn || skin.description : skin.description}
                   </p>
 
                   {/* Price and Actions */}
                   <div className="flex items-center justify-between">
                     <div>
                       {skin.price === 0 ? (
-                        <span className="text-2xl font-bold text-green-400">免费</span>
+                        <span className="text-2xl font-bold text-green-400">{locale === 'en-US' ? 'Free' : '免费'}</span>
                       ) : (
                         <span className="text-2xl font-bold text-gray-200">
                           ¥{skin.price.toFixed(2)}
@@ -156,7 +164,7 @@ function FeaturedSkins() {
                         className="border-gray-700 text-white hover:bg-white/10"
                         onClick={() => { setPreviewSkin(skin); setPreviewTab('image'); }}
                       >
-                        查看详情
+                        {t('featuredSkins.preview')}
                       </Button>
                       <Button
                         size="sm"
@@ -186,7 +194,7 @@ function FeaturedSkins() {
               variant="outline"
               className="border-2 border-gray-600/30 bg-gray-800/10 px-8 py-6 text-lg font-bold text-gray-300 backdrop-blur-sm transition-all hover:border-gray-500 hover:bg-gray-700/30 hover:text-white"
             >
-              探索全部 50+ 款皮肤 →
+              {t('featuredSkins.viewAll')} →
             </Button>
           </Link>
         </motion.div>
@@ -199,8 +207,8 @@ function FeaturedSkins() {
             {/* 左侧：图片轮播/视频 (扩大预览区) */}
             <div className="flex-1 min-w-0 bg-black/80 flex flex-col items-center justify-center">
               <div className="flex gap-2 p-4">
-                <Button size="sm" variant={previewTab === 'image' ? 'default' : 'outline'} onClick={() => setPreviewTab('image')}>图片</Button>
-                {previewSkin.video && <Button size="sm" variant={previewTab === 'video' ? 'default' : 'outline'} onClick={() => setPreviewTab('video')}>演示视频</Button>}
+                <Button size="sm" variant={previewTab === 'image' ? 'default' : 'outline'} onClick={() => setPreviewTab('image')}>{locale === 'en-US' ? 'Images' : '图片'}</Button>
+                {previewSkin.video && <Button size="sm" variant={previewTab === 'video' ? 'default' : 'outline'} onClick={() => setPreviewTab('video')}>{locale === 'en-US' ? 'Demo Video' : '演示视频'}</Button>}
               </div>
               <div className="w-full px-4 pb-4">
                 {previewTab === 'image' ? (

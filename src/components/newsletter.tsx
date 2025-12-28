@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, CheckCircle, XCircle } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n/use-translation';
 
 function Newsletter() {
+  const { t, locale } = useTranslation();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -58,12 +60,12 @@ function Newsletter() {
 
               {/* Title */}
               <h2 className="mb-4 text-center text-4xl font-bold text-white">
-                订阅我们的Newsletter
+                {t('newsletter.title')}
               </h2>
 
               {/* Description */}
               <p className="mb-8 text-center text-lg text-gray-400">
-                获取最新皮肤发布和独家优惠信息
+                {t('newsletter.subtitle')}
               </p>
 
               {/* Form */}
@@ -71,7 +73,7 @@ function Newsletter() {
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <Input
                     type="email"
-                    placeholder="输入你的邮箱地址"
+                    placeholder={t('newsletter.placeholder')}
                     value={email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     required
@@ -83,7 +85,7 @@ function Newsletter() {
                     disabled={status === 'loading'}
                     className="bg-gradient-to-r from-gray-700 to-gray-800 px-8 text-white hover:from-gray-600 hover:to-gray-700"
                   >
-                    {status === 'loading' ? '订阅中...' : '立即订阅'}
+                    {status === 'loading' ? (locale === 'en-US' ? 'Subscribing...' : '订阅中...') : t('newsletter.subscribe')}
                   </Button>
                 </div>
               </form>
@@ -96,7 +98,7 @@ function Newsletter() {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <CheckCircle className="h-5 w-5" />
-                  <span>订阅成功！欢迎加入我们的社区 🎉</span>
+                  <span>{locale === 'en-US' ? 'Successfully subscribed! Welcome to our community 🎉' : '订阅成功！欢迎加入我们的社区 🎉'}</span>
                 </motion.div>
               )}
 
@@ -107,7 +109,7 @@ function Newsletter() {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <XCircle className="h-5 w-5" />
-                  <span>订阅失败，请稍后重试</span>
+                  <span>{locale === 'en-US' ? 'Subscription failed, please try again later' : '订阅失败，请稍后重试'}</span>
                 </motion.div>
               )}
 
@@ -115,21 +117,21 @@ function Newsletter() {
               <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span>每月1-2封邮件</span>
+                  <span>{locale === 'en-US' ? '1-2 emails per month' : '每月1-2封邮件'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span>随时可退订</span>
+                  <span>{locale === 'en-US' ? 'Unsubscribe anytime' : '随时可退订'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span>订阅即送优惠码</span>
+                  <span>{locale === 'en-US' ? 'Subscribe to get discount code' : '订阅即送优惠码'}</span>
                 </div>
               </div>
 
               {/* Privacy */}
               <p className="mt-4 text-center text-xs text-gray-500">
-                我们尊重你的隐私，不会分享你的信息
+                {locale === 'en-US' ? 'We respect your privacy and will not share your information' : '我们尊重你的隐私，不会分享你的信息'}
               </p>
             </div>
           </div>

@@ -9,35 +9,41 @@ interface LanguageState {
   setLocale: (locale: Locale) => void;
 }
 
-// Get initial locale from localStorage safely
-const getInitialLocale = (): Locale => {
-  if (typeof window === 'undefined') return 'zh-CN';
-  
-  try {
-    const stored = localStorage.getItem('language-preference');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      return parsed.state?.locale || 'zh-CN';
-    }
-  } catch (e) {
-    console.error('Failed to parse stored locale:', e);
-  }
-  
-  return 'zh-CN';
-};
-
-// Simple store without persist to avoid SSR issues
+// Simple store - always start with zh-CN
 export const useLanguageStore = create<LanguageState>()((set) => ({
-  locale: getInitialLocale(),
+  locale: 'zh-CN',
   setLocale: (locale) => {
+    console.log('[LanguageStore] Changing locale to:', locale);
     set({ locale });
-    // Manually save to localStorage
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem('language-preference', JSON.stringify({ state: { locale } }));
+        localStorage.setItem('app-language', locale);
+        console.log('[LanguageStore] Saved to localStorage:', locale);
       } catch (e) {
         console.error('Failed to save locale:', e);
       }
     }
   },
 }));
+
+// Initialize from localStorage on client side - runs once
+if (typeof window !== 'undefined') {
+  const initLocale = () => {
+    try {
+      const saved = localStorage.getItem('app-language') as Locale;
+      if (saved && (saved === 'zh-CN' || saved === 'en-US')) {
+        console.log('[LanguageStore] Loading saved locale:', saved);
+        useLanguageStore.setState({ locale: saved });
+      }
+    } catch (e) {
+      console.error('Failed to load locale:', e);
+    }
+  };
+  
+  // Run after a brief delay to avoid hydration issues
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLocale);
+  } else {
+    setTimeout(initLocale, 0);
+  }
+}

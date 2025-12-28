@@ -125,6 +125,14 @@ export const translations = {
       delete: '删除',
       edit: '编辑',
     },
+
+    // Quality labels
+    quality: {
+      legendary: '传说',
+      epic: '史诗',
+      rare: '精良',
+      uncommon: '优秀',
+    },
   },
 
   'en-US': {
@@ -252,6 +260,14 @@ export const translations = {
       confirm: 'Confirm',
       delete: 'Delete',
       edit: 'Edit',
+    },
+
+    // Quality labels
+    quality: {
+      legendary: 'Legendary',
+      epic: 'Epic',
+      rare: 'Rare',
+      uncommon: 'Uncommon',
     },
   },
 } as const;

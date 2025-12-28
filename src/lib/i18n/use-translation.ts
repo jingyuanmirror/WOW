@@ -1,5 +1,6 @@
 'use client';
 
+import { useSyncExternalStore } from 'react';
 import { useLanguageStore, type Locale } from '@/lib/stores/language-store';
 import { translations } from './translations';
 
@@ -12,10 +13,12 @@ type NestedKeyOf<ObjectType extends object> = {
 type TranslationPath = NestedKeyOf<typeof translations['zh-CN']>;
 
 export function useTranslation() {
+  // Force re-render when locale changes by using the hook directly
   const locale = useLanguageStore((state) => state.locale);
 
   const t = (path: TranslationPath): string => {
     const keys = path.split('.');
+    // Always read from current locale
     let value: any = translations[locale];
 
     for (const key of keys) {

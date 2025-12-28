@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Heart, Eye, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Skin } from '@/lib/types/skin';
@@ -32,7 +33,9 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
   const imageCount = skin.media?.images?.length || 1;
   const videoCount = skin.media?.videos?.length || (skin.video ? 1 : 0);
 
-  const handlePreview = () => {
+  const handlePreview = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     onPreview?.(skin);
   };
 
@@ -44,10 +47,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
     >
       <Card className="overflow-hidden bg-zinc-900/50 border-zinc-800 hover:border-zinc-700 transition-colors h-full flex flex-col">
         {/* 预览图区域 */}
-        <div
-          className="relative aspect-video bg-zinc-950 cursor-pointer group overflow-hidden"
-          onClick={handlePreview}
-        >
+        <Link href={`/skins/${skin.id}`} className="relative aspect-video bg-zinc-950 cursor-pointer group overflow-hidden block">
           <Image
             src={thumbnail}
             alt={skin.name}
@@ -63,7 +63,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
               animate={{ opacity: 1 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
             >
-              <span className="text-white text-sm font-medium">点击预览</span>
+              <span className="text-white text-sm font-medium">查看详情</span>
             </motion.div>
           )}
 
@@ -72,7 +72,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
             className="absolute top-0 left-0 right-0 h-1"
             style={{ backgroundColor: getQualityColor(skin.quality) }}
           />
-        </div>
+        </Link>
 
         {/* 媒体类型指示器 */}
         <div className="px-3 py-2 bg-zinc-950/50 flex items-center gap-3 text-xs text-zinc-400">
@@ -161,7 +161,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
               asChild
               className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium"
             >
-              <a href={`/skins/${skin.id}`}>查看详情</a>
+              <Link href={`/skins/${skin.id}`}>查看详情</Link>
             </Button>
             <Button
               variant="outline"

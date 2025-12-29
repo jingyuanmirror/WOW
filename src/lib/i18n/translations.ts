@@ -2,7 +2,7 @@ export const translations = {
   'zh-CN': {
     // Navbar
     nav: {
-      brand: '艾泽拉斯UI工坊',
+      brand: 'Mang UI',
       home: '首页',
       skins: '皮肤列表',
       about: '作者介绍',
@@ -100,7 +100,7 @@ export const translations = {
         contact: '联系方式',
       },
       follow: '关注我们',
-      copyright: '© 2024 艾泽拉斯UI工坊. 保留所有权利。',
+      copyright: '© 2024 Mang UI. 保留所有权利。',
     },
 
     // CTA

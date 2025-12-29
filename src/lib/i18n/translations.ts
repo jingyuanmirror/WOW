@@ -138,7 +138,7 @@ export const translations = {
   'en-US': {
     // Navbar
     nav: {
-      brand: 'Azeroth UI Studio',
+      brand: 'Mang UI',
       home: 'Home',
       skins: 'Skins',
       about: 'About',
@@ -236,7 +236,7 @@ export const translations = {
         contact: 'Contact',
       },
       follow: 'Follow Us',
-      copyright: '© 2024 Azeroth UI Studio. All rights reserved.',
+      copyright: '© 2024 Mang UI. All rights reserved.',
     },
 
     // CTA

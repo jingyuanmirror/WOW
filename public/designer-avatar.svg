@@ -1,0 +1,22 @@
+<svg width="480" height="480" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Designer avatar placeholder">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.9" />
+    </linearGradient>
+    <radialGradient id="g2" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fff7ed" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.1" />
+    </radialGradient>
+  </defs>
+  <rect width="480" height="480" rx="120" fill="#0b0b0f" />
+  <rect x="40" y="40" width="400" height="400" rx="120" fill="url(#g1)" opacity="0.65" />
+  <rect x="70" y="70" width="340" height="340" rx="110" fill="url(#g2)" />
+  <circle cx="240" cy="190" r="86" fill="#0b0b0f" stroke="#fde68a" stroke-width="8" />
+  <circle cx="210" cy="180" r="12" fill="#fde68a" />
+  <circle cx="270" cy="180" r="12" fill="#fde68a" />
+  <path d="M190 220c18 24 44 36 80 36" stroke="#fbbf24" stroke-width="12" stroke-linecap="round" fill="none" />
+  <path d="M180 320c20-28 52-42 96-42s76 14 96 42" stroke="#f1f5f9" stroke-opacity="0.7" stroke-width="14" stroke-linecap="round" fill="none" />
+  <path d="M150 340c24 40 54 60 90 60s66-20 90-60" stroke="#fde68a" stroke-opacity="0.8" stroke-width="12" stroke-linecap="round" fill="none" />
+  <text x="50%" y="430" text-anchor="middle" font-family="'Inter', 'SF Pro Display', 'Segoe UI', sans-serif" font-size="28" fill="#e2e8f0" font-weight="700">WOW UI Designer</text>
+</svg>

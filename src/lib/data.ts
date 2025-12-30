@@ -269,3 +269,46 @@ export const installSteps = [
     icon: "Play"
   }
 ];
+
+export const promoSlides = [
+  {
+    id: 'hero',
+    title: "重新定义义你的战斗体验",
+    titleEn: "Redefine Your Combat Experience",
+    description: "专业设计 | 极致美观 | 简单易用",
+    descriptionEn: "Professional Design | Ultimate Beauty | Easy to Use",
+    image: "", // 使用Hero背景效果
+    link: "/skins",
+    linkText: "查看全部作品",
+    linkTextEn: "View All Works",
+    backgroundColor: "#000000",
+    isHeroSlide: true // 标记为主Hero屏
+  },
+  {
+    id: 1,
+    title: "新年特惠活动",
+    description: "全场界面皮肤限时7折优惠，新年新气象，给你的游戏界面换个新装！",
+    image: "https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=1920&h=600&fit=crop",
+    link: "/skins",
+    linkText: "立即选购",
+    backgroundColor: "#1a0a2e"
+  },
+  {
+    id: 2,
+    title: "全新传说品质皮肤上架",
+    description: "圣光守护者 - 为治疗职业打造的顶级界面，团队框架一目了然",
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920&h=600&fit=crop",
+    link: "/skins/2",
+    linkText: "查看详情",
+    backgroundColor: "#16213e"
+  },
+  {
+    id: 3,
+    title: "社区设计师招募中",
+    description: "加入我们的设计师团队，一起为玩家创造更好的游戏体验",
+    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1920&h=600&fit=crop",
+    link: "/about",
+    linkText: "了解更多",
+    backgroundColor: "#0f3460"
+  }
+];

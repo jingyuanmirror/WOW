@@ -145,9 +145,12 @@ export default function PromoCarousel({
         </>
       )}
 
-      {/* Dots Indicator - Only show if more than 1 slide */}
+      {/* Dots Indicator - 轮播指示器 */}
       {slides.length > 1 && (
-        <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 sm:gap-2 bg-zinc-900/80 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-zinc-700/50 shadow-xl">
+        <div 
+          className="absolute left-1/2 -translate-x-1/2 z-10 flex gap-1.5 sm:gap-2 bg-zinc-900/80 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-zinc-700/50 shadow-xl"
+          style={{ bottom: '200px' }}
+        >
           {slides.map((_, index) => (
             <button
               key={index}

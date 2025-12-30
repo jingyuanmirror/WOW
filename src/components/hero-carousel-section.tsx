@@ -35,6 +35,11 @@ export default function HeroCarouselSection({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  // Guard against empty or undefined slides to avoid runtime errors
+  if (!slides || slides.length === 0) {
+    return null;
+  }
+
   useEffect(() => {
     if (!isAutoPlaying || slides.length <= 1) return;
 
@@ -44,6 +49,13 @@ export default function HeroCarouselSection({
 
     return () => clearInterval(interval);
   }, [slides.length, autoPlayInterval, isAutoPlaying]);
+
+  // Clamp current index when slide count shrinks (e.g., removing slides)
+  useEffect(() => {
+    if (currentIndex >= slides.length) {
+      setCurrentIndex(Math.max(slides.length - 1, 0));
+    }
+  }, [slides.length, currentIndex]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);

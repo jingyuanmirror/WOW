@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '@/lib/i18n/use-translation';
-import PromoCarousel from '@/components/promo-carousel';
-import { promoSlides } from '@/lib/data';
 
 function HeroSection() {
   const { t } = useTranslation();
@@ -18,11 +16,6 @@ function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* 顶部活动轮播横幅 - 紧凑版 */}
-      <div className="absolute top-0 left-0 right-0 z-30 pt-20">
-        <PromoCarousel slides={promoSlides} height="180px" />
-      </div>
-
       {/* Epic WoW Raid Background - 史诗突袭场景 */}
       <div className="absolute inset-0 z-0">
         {/* 深色背景基底 */}
@@ -156,8 +149,10 @@ function HeroSection() {
 
       {/* Scroll Indicator */}
       <motion.button
+      {/* Scroll Indicator - 查看更多 */}
+      <motion.button
         onClick={scrollToNext}
-        className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-gray-500 transition-colors hover:text-gray-300"
+        className="absolute bottom-32 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-gray-400 transition-colors hover:text-yellow-400"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{
@@ -165,11 +160,9 @@ function HeroSection() {
           y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
         }}
       >
-        <span className="text-sm">{t('common.viewMore')}</span>
+        <span className="text-sm font-medium">{t('common.viewMore')}</span>
         <ChevronDown className="h-6 w-6" />
       </motion.button>
-    </section>
-  );
 }
 
 export default HeroSection;

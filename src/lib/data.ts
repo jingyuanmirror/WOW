@@ -301,14 +301,5 @@ export const promoSlides = [
     link: "/skins/2",
     linkText: "查看详情",
     backgroundColor: "#16213e"
-  },
-  {
-    id: 3,
-    title: "社区设计师招募中",
-    description: "加入我们的设计师团队，一起为玩家创造更好的游戏体验",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1920&h=600&fit=crop",
-    link: "/about",
-    linkText: "了解更多",
-    backgroundColor: "#0f3460"
   }
 ];

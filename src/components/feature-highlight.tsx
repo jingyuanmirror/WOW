@@ -71,17 +71,19 @@ function FeatureHighlight() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Icon */}
-              <motion.div
-                className="mb-6"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-              >
-                <feature.icon className={`h-16 w-16 ${feature.color}`} />
-              </motion.div>
+              {/* Icon + Title */}
+              <div className="mb-4 flex items-center gap-4">
+                <motion.div
+                  className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-800/40"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <feature.icon className={`h-10 w-10 ${feature.color}`} />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-white">{locale === 'en-US' ? feature.title.en : feature.title.zh}</h3>
+              </div>
 
               {/* Content */}
-              <h3 className="mb-3 text-2xl font-bold text-white">{locale === 'en-US' ? feature.title.en : feature.title.zh}</h3>
               <p className="text-gray-400">{locale === 'en-US' ? feature.description.en : feature.description.zh}</p>
 
               {/* Decorative gradient */}

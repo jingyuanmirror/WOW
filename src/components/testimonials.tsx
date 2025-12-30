@@ -84,8 +84,11 @@ function Testimonials() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Card className="h-full border-gray-800 bg-gradient-to-br from-gray-900/80 to-gray-900/40 p-6 backdrop-blur-sm transition-all hover:border-gray-700 hover:shadow-2xl hover:shadow-gray-600/10">
-                {/* Rating */}
-                <div className="mb-4 flex items-center gap-2">
+                {/* Rating with Avatar */}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 text-lg font-bold text-white flex-shrink-0">
+                    {testimonial.author.charAt(0)}
+                  </div>
                   <div className="flex gap-1">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
@@ -104,19 +107,8 @@ function Testimonials() {
                   &ldquo;{testimonial.content}&rdquo;
                 </p>
 
-                {/* Author */}
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 text-lg font-bold text-white">
-                    {testimonial.author.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-bold text-white">{testimonial.author}</div>
-                    <div className="text-sm text-gray-400">{testimonial.role}</div>
-                  </div>
-                </div>
-
                 {/* Verified Badge */}
-                <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs text-green-400">
+                <div className="inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs text-green-400">
                   <CheckCircle className="h-3 w-3" />
                   {locale === 'en-US' ? 'Verified Purchase' : '已验证购买'}
                 </div>

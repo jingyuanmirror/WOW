@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import { ArrowUpRight, Mail, Quote, Sparkles, Stars } from "lucide-react";
 
@@ -5,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AuthorStats, AuthorStatItem } from "@/components/author-stats";
 import { SocialLinks, SocialLinkItem } from "@/components/social-links";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/lib/i18n/use-translation";
 
 export type AuthorWork = {
   title: string;
@@ -39,6 +42,8 @@ export function AuthorProfile({
   contactEmail,
   className,
 }: AuthorProfileProps) {
+  const { t } = useTranslation();
+
   return (
     <section
       className={cn(
@@ -54,7 +59,7 @@ export function AuthorProfile({
         <header className="space-y-3">
           <p className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-100/80 ring-1 ring-white/10">
             <Sparkles className="size-4" />
-            About the Designer
+            {t('author.aboutDesigner')}
           </p>
           {author.name ? (
             <h1 className="text-4xl font-bold leading-tight md:text-5xl">
@@ -102,7 +107,7 @@ export function AuthorProfile({
           {/* Right column: bio, philosophy, highlights, CTA */}
           <div className="space-y-8">
             <section className="space-y-3">
-              <h3 className="text-lg font-semibold text-amber-100">个人简介</h3>
+              <h3 className="text-lg font-semibold text-amber-100">{t('author.bio')}</h3>
               <div className="space-y-3 text-gray-200">
                 {author.bio.map((paragraph) => (
                   <p key={paragraph} className="leading-7 text-gray-300">
@@ -115,7 +120,7 @@ export function AuthorProfile({
             <section className="space-y-3 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-6 shadow-inner">
               <div className="flex items-center gap-2 text-amber-100">
                 <Quote className="size-4" />
-                <h3 className="text-lg font-semibold">我的设计理念</h3>
+                <h3 className="text-lg font-semibold">{t('author.philosophy')}</h3>
               </div>
               <p className="text-lg leading-8 text-amber-50">{author.philosophy}</p>
               {author.highlights && author.highlights.length > 0 ? (
@@ -138,10 +143,10 @@ export function AuthorProfile({
                   className="bg-gradient-to-r from-amber-500 to-orange-500 text-base font-semibold text-white shadow-lg shadow-amber-500/40"
                 >
                   <a href={`mailto:${contactEmail}`} aria-label="联系作者">
-                    <Mail className="mr-2 size-5" /> 联系作者
+                    <Mail className="mr-2 size-5" /> {t('author.contactAuthor')}
                   </a>
                 </Button>
-                <p className="text-sm text-gray-400">欢迎合作、采访或社区共创。</p>
+                <p className="text-sm text-gray-400">{t('author.contactMessage')}</p>
               </div>
             ) : null}
           </div>
@@ -151,10 +156,10 @@ export function AuthorProfile({
           <section className="space-y-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="text-xl font-semibold">代表作品</h3>
-                <p className="text-sm text-gray-400">精选皮肤与项目，展示设计风格与实践成果。</p>
+                <h3 className="text-xl font-semibold">{t('author.works')}</h3>
+                <p className="text-sm text-gray-400">{t('author.worksSubtitle')}</p>
               </div>
-              <div className="hidden text-sm text-gray-500 sm:block">更多作品即将上线</div>
+              <div className="hidden text-sm text-gray-500 sm:block">{t('author.moreWorks')}</div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -189,7 +194,7 @@ export function AuthorProfile({
                         className="text-amber-200 hover:bg-amber-500/10 hover:text-amber-100"
                       >
                         <a href={work.href} className="inline-flex items-center" aria-label={`查看${work.title}`}>
-                          查看详情
+                          {t('author.viewDetails')}
                           <ArrowUpRight className="ml-1 size-4" />
                         </a>
                       </Button>

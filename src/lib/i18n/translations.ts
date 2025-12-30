@@ -133,6 +133,58 @@ export const translations = {
       rare: '精良',
       uncommon: '优秀',
     },
+
+    // Author Profile
+    author: {
+      aboutDesigner: '关于设计师',
+      bio: '个人简介',
+      philosophy: '我的设计理念',
+      works: '代表作品',
+      worksSubtitle: '精选皮肤与项目，展示设计风格与实践成果。',
+      moreWorks: '更多作品即将上线',
+      viewDetails: '查看详情',
+      contactAuthor: '联系作者',
+      contactMessage: '欢迎合作、采访或社区共创。',
+      bioContent: {
+        p1: "你好，我是 Azeroth UI Master，专注魔兽世界UI设计 8 年，擅长以数据驱动的方式优化界面体验。",
+        p2: "我相信优秀的UI应该兼顾美观与实用，信息清晰、操作高效、视觉舒适是每一次设计的底线。",
+        p3: "感谢 12 万+ 玩家选择我的作品，我希望通过持续迭代让每位玩家都拥有专属的游戏体验。",
+      },
+      philosophyContent: "简洁、高效、美观是核心准则；每个像素都要服务信息传达，每个交互都应让玩家更沉浸。",
+      highlights: [
+        "信息层级清晰，战斗读秒与冷却一目了然",
+        "视觉统一，品质色与职业色精细还原",
+        "性能优先，轻量化与低占用并行",
+        "多分辨率适配，1080p-4K皆有出色体验",
+      ],
+      stats: {
+        totalSkins: '皮肤作品',
+        totalDownloads: '活跃用户',
+        averageRating: '平均评分',
+        yearsExperience: '从业年限',
+      },
+      statsHelper: {
+        totalSkins: '精品持续更新',
+        totalDownloads: '全球玩家覆盖',
+        averageRating: '社区口碑保障',
+        yearsExperience: '深耕魔兽UI生态',
+      },
+      socialLinks: {
+        twitter: 'Twitter / X',
+        discord: 'Discord 社群',
+        youtube: 'YouTube 频道',
+        bilibili: 'Bilibili · 教程',
+        nga: 'NGA 论坛',
+        github: 'GitHub',
+        badges: {
+          official: '官方',
+          community: '社区',
+          video: '视频',
+          tutorial: '教程',
+          code: '代码',
+        },
+      },
+    },
   },
 
   'en-US': {
@@ -268,6 +320,58 @@ export const translations = {
       epic: 'Epic',
       rare: 'Rare',
       uncommon: 'Uncommon',
+    },
+
+    // Author Profile
+    author: {
+      aboutDesigner: 'About the Designer',
+      bio: 'About Me',
+      philosophy: 'My Design Philosophy',
+      works: 'Featured Works',
+      worksSubtitle: 'Selected skins and projects showcasing my design style and practical results.',
+      moreWorks: 'More works coming soon',
+      viewDetails: 'View Details',
+      contactAuthor: 'Contact Author',
+      contactMessage: 'I welcome collaborations, interviews, and community co-creation.',
+      bioContent: {
+        p1: "Hi, I'm Azeroth UI Master, dedicated to World of Warcraft UI design for 8 years. I specialize in data-driven interface optimization and user experience enhancement.",
+        p2: "I believe excellent UI design should balance aesthetics with functionality. Clear information hierarchy, efficient interaction, and visual comfort are the foundation of every design.",
+        p3: "Thank you to 120,000+ players who have chosen my works. I'm committed to continuous iteration to provide every player with a personalized gaming experience.",
+      },
+      philosophyContent: "Simplicity, efficiency, and beauty are core principles. Every pixel should serve information delivery, and every interaction should immerse players deeper into the world.",
+      highlights: [
+        "Clear information hierarchy with combat timers and cooldowns at a glance",
+        "Visual consistency with refined quality and class color representation",
+        "Performance-first approach with lightweight and low-footprint optimization",
+        "Multi-resolution support providing excellent experience from 1080p to 4K",
+      ],
+      stats: {
+        totalSkins: 'Skins',
+        totalDownloads: 'Active Users',
+        averageRating: 'Average Rating',
+        yearsExperience: 'Years Experience',
+      },
+      statsHelper: {
+        totalSkins: 'Quality Updates Continuously',
+        totalDownloads: 'Global Player Coverage',
+        averageRating: 'Community Trust Guaranteed',
+        yearsExperience: 'Deep in WoW UI Ecosystem',
+      },
+      socialLinks: {
+        twitter: 'Twitter / X',
+        discord: 'Discord Community',
+        youtube: 'YouTube Channel',
+        bilibili: 'Bilibili · Tutorial',
+        nga: 'NGA Forum',
+        github: 'GitHub',
+        badges: {
+          official: 'Official',
+          community: 'Community',
+          video: 'Video',
+          tutorial: 'Tutorial',
+          code: 'Code',
+        },
+      },
     },
   },
 } as const;

@@ -1,4 +1,10 @@
+'use client';
+
+import { useTranslation } from '@/lib/i18n';
+
 export function SkinListHeader({ total }: { total: number }) {
+  const { t } = useTranslation();
+
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 border-b border-zinc-800">
       {/* 背景纹理 */}
@@ -14,15 +20,19 @@ export function SkinListHeader({ total }: { total: number }) {
       <div className="relative container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent">
-            皮肤作品集
+            {t('skinsPage.header.title')}
           </h1>
           <p className="text-lg text-zinc-400 mb-6">
-            探索专为魔兽世界打造的精美UI皮肤，提升你的游戏体验
+            {t('skinsPage.header.subtitle')}
           </p>
           <div className="flex items-center justify-center gap-6 text-sm text-zinc-500">
-            <span>总计 <span className="text-amber-400 font-semibold">{total}</span> 款皮肤</span>
+            <span>
+              {t('skinsPage.header.totalPrefix')}{' '}
+              <span className="text-amber-400 font-semibold">{total}</span>{' '}
+              {t('skinsPage.header.totalSuffix')}
+            </span>
             <span className="hidden md:inline">|</span>
-            <span className="hidden md:inline">支持正式服、60版、80版</span>
+            <span className="hidden md:inline">{t('skinsPage.header.supportText')}</span>
           </div>
         </div>
       </div>

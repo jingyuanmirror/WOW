@@ -6,12 +6,14 @@ import { useSkinFilters } from '@/lib/hooks/use-skin-filters';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
+import { useTranslation } from '@/lib/i18n';
 
 interface SkinFilterBarProps {
   availableTags?: string[];
 }
 
 export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
+  const { t } = useTranslation();
   const {
     filters,
     updateFilter,
@@ -25,17 +27,17 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const versions: { key: SkinVersion; label: string }[] = [
-    { key: 'retail', label: '正式服' },
-    { key: 'classic', label: '60版' },
-    { key: 'wrath', label: '80版' },
+    { key: 'retail', label: t('skinsPage.filters.versions.retail') },
+    { key: 'classic', label: t('skinsPage.filters.versions.classic') },
+    { key: 'wrath', label: t('skinsPage.filters.versions.wrath') },
   ];
 
   const sortOptions: { key: SortOption; label: string }[] = [
-    { key: 'default', label: '默认排序' },
-    { key: 'likes', label: '喜欢最多' },
-    { key: 'latest', label: '最新优先' },
-    { key: 'name-asc', label: '名称 A-Z' },
-    { key: 'name-desc', label: '名称 Z-A' },
+    { key: 'default', label: t('skinsPage.filters.sortOptions.default') },
+    { key: 'likes', label: t('skinsPage.filters.sortOptions.likes') },
+    { key: 'latest', label: t('skinsPage.filters.sortOptions.latest') },
+    { key: 'name-asc', label: t('skinsPage.filters.sortOptions.nameAsc') },
+    { key: 'name-desc', label: t('skinsPage.filters.sortOptions.nameDesc') },
   ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -50,7 +52,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
         <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
           {/* 版本筛选 */}
           <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-400 font-medium mr-2">版本:</span>
+            <span className="text-sm text-zinc-400 font-medium mr-2">{t('skinsPage.filters.versionsLabel')}</span>
             {versions.map((version) => (
               <Button
                 key={version.key}
@@ -70,7 +72,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
 
           {/* 排序选择器 */}
           <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-400 font-medium">排序:</span>
+            <span className="text-sm text-zinc-400 font-medium">{t('skinsPage.filters.sortLabel')}</span>
             <select
               value={filters.sort || 'likes'}
               onChange={(e) => updateFilter('sort', e.target.value as SortOption)}
@@ -90,7 +92,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <Input
                 type="text"
-                placeholder="搜索皮肤名称..."
+                placeholder={t('skinsPage.filters.searchPlaceholder')}
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 className="pl-10 pr-10 bg-zinc-900 border-zinc-700 text-zinc-200 placeholder:text-zinc-500"
@@ -136,7 +138,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
         {/* 标签筛选 (可选) */}
         {availableTags.length > 0 && (
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-sm text-zinc-400 font-medium">标签:</span>
+            <span className="text-sm text-zinc-400 font-medium">{t('skinsPage.filters.tagsLabel')}</span>
             {availableTags.slice(0, 10).map((tag) => (
               <button
                 key={tag}
@@ -156,7 +158,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
         {/* 激活的筛选条件 */}
         {hasActiveFilters && (
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-sm text-zinc-400">已选择:</span>
+            <span className="text-sm text-zinc-400">{t('skinsPage.filters.selectedLabel')}</span>
             
             {filters.versions?.map((version) => (
               <span
@@ -190,7 +192,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
 
             {filters.search && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs">
-                搜索: "{filters.search}"
+                {t('skinsPage.filters.searchLabel')}: "{filters.search}"
                 <button
                   onClick={() => {
                     setSearchInput('');
@@ -209,7 +211,7 @@ export function SkinFilterBar({ availableTags = [] }: SkinFilterBarProps) {
               onClick={clearFilters}
               className="text-xs text-zinc-400 hover:text-zinc-200"
             >
-              清除全部
+              {t('skinsPage.filters.clearAll')}
             </Button>
           </div>
         )}

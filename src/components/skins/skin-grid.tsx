@@ -5,12 +5,14 @@ import { Skin } from '@/lib/types/skin';
 import { SkinCard } from './skin-card';
 import SkinPreviewModal from '../skin-preview-modal';
 import Image from 'next/image';
+import { useTranslation } from '@/lib/i18n';
 
 interface SkinGridProps {
   skins: Skin[];
 }
 
 export function SkinGrid({ skins }: SkinGridProps) {
+  const { t } = useTranslation();
   const [previewSkin, setPreviewSkin] = useState<Skin | null>(null);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
@@ -102,10 +104,10 @@ export function SkinGrid({ skins }: SkinGridProps) {
               loop
               className="max-w-full max-h-full rounded-lg"
             >
-              您的浏览器不支持视频播放
+              {t('skinsPage.grid.videoUnsupported')}
             </video>
           ) : (
-            <div className="text-zinc-400">暂无预览</div>
+            <div className="text-zinc-400">{t('skinsPage.grid.noPreview')}</div>
           )}
 
           {/* 左右切换按钮 */}
@@ -114,7 +116,7 @@ export function SkinGrid({ skins }: SkinGridProps) {
               <button
                 onClick={handlePrev}
                 className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-sm z-10"
-                aria-label="上一张"
+                aria-label={t('skinsPage.grid.previous')}
               >
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6"></polyline>
@@ -123,7 +125,7 @@ export function SkinGrid({ skins }: SkinGridProps) {
               <button
                 onClick={handleNext}
                 className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all backdrop-blur-sm z-10"
-                aria-label="下一张"
+                aria-label={t('skinsPage.grid.next')}
               >
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6"></polyline>
@@ -182,13 +184,13 @@ export function SkinGrid({ skins }: SkinGridProps) {
             </div>
             <div className="flex items-center gap-3 w-full md:w-auto">
               <span className="text-xs md:text-sm text-zinc-400 flex-1 md:flex-initial">
-                ❤️ {previewSkin.stats?.likes || previewSkin.downloads || 0} 喜欢
+                ❤️ {previewSkin.stats?.likes || previewSkin.downloads || 0} {t('skinsPage.grid.likes')}
               </span>
               <a
                 href={`/skins/${previewSkin.id}`}
                 className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs md:text-sm font-medium rounded-lg transition-all whitespace-nowrap"
               >
-                查看完整详情
+                {t('skinsPage.grid.viewDetails')}
               </a>
             </div>
           </div>
@@ -201,8 +203,8 @@ export function SkinGrid({ skins }: SkinGridProps) {
     return (
       <div className="text-center py-20">
         <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-semibold text-zinc-300 mb-2">未找到符合条件的皮肤</h3>
-        <p className="text-zinc-500">尝试调整筛选条件或清除所有筛选</p>
+        <h3 className="text-xl font-semibold text-zinc-300 mb-2">{t('skinsPage.grid.emptyTitle')}</h3>
+        <p className="text-zinc-500">{t('skinsPage.grid.emptyDescription')}</p>
       </div>
     );
   }

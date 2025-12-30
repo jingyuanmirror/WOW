@@ -7,6 +7,7 @@ import { SkinListHeader } from '@/components/skins/skin-list-header';
 import { SkinFilterBar } from '@/components/skins/skin-filter-bar';
 import { SkinGrid } from '@/components/skins/skin-grid';
 import { SkinGridSkeleton } from '@/components/skins/skin-grid-skeleton';
+import { SkinResultsSummary } from '@/components/skins/skin-results-summary';
 import Navbar from '@/components/navbar';
 
 export const metadata: Metadata = {
@@ -78,12 +79,7 @@ export default async function SkinsPage({ searchParams }: SkinsPageProps) {
 
         {/* 主内容区 */}
         <div className="container mx-auto px-4 py-8">
-          {/* 结果统计 */}
-          {total !== totalSkins && (
-            <div className="mb-6 text-sm text-zinc-400">
-              显示 <span className="text-amber-400 font-semibold">{total}</span> 个结果
-            </div>
-          )}
+          <SkinResultsSummary total={total} totalSkins={totalSkins} />
 
           {/* 皮肤网格 */}
           <Suspense fallback={<SkinGridSkeleton />}>

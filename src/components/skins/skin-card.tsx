@@ -15,6 +15,7 @@ import {
 import { useLikeSkin } from '@/lib/hooks/use-like-skin';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useTranslation } from '@/lib/i18n';
 
 interface SkinCardProps {
   skin: Skin;
@@ -22,6 +23,7 @@ interface SkinCardProps {
 }
 
 export function SkinCard({ skin, onPreview }: SkinCardProps) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const { isLiked, likes, toggleLike } = useLikeSkin(skin.id, {
     initialLiked: false,
@@ -63,7 +65,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
               animate={{ opacity: 1 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
             >
-              <span className="text-white text-sm font-medium">查看详情</span>
+              <span className="text-white text-sm font-medium">{t('skinsPage.card.viewDetails')}</span>
             </motion.div>
           )}
 
@@ -78,12 +80,12 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
         <div className="px-3 py-2 bg-zinc-950/50 flex items-center gap-3 text-xs text-zinc-400">
           {imageCount > 0 && (
             <span className="flex items-center gap-1">
-              🖼️ {imageCount}张
+              🖼️ {imageCount}{t('skinsPage.card.images')}
             </span>
           )}
           {videoCount > 0 && (
             <span className="flex items-center gap-1">
-              🎬 {videoCount}个
+              🎬 {videoCount}{t('skinsPage.card.videos')}
             </span>
           )}
         </div>
@@ -102,16 +104,16 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
 
           {/* 互动数据 */}
           <div className="flex items-center gap-4 text-xs text-zinc-400 mb-3">
-            <span className="flex items-center gap-1" title="喜欢数">
+            <span className="flex items-center gap-1" title={t('skinsPage.card.likes')}>
               <Heart className="w-3.5 h-3.5" />
               {formatNumber(likes)}
             </span>
-            <span className="flex items-center gap-1" title="浏览数">
+            <span className="flex items-center gap-1" title={t('skinsPage.card.views')}>
               <Eye className="w-3.5 h-3.5" />
               {formatNumber(skin.stats?.views || (skin.downloads ? skin.downloads * 2 : 0))}
             </span>
             {skin.stats?.comments ? (
-              <span className="flex items-center gap-1" title="评论数">
+              <span className="flex items-center gap-1" title={t('skinsPage.card.comments')}>
                 <MessageCircle className="w-3.5 h-3.5" />
                 {formatNumber(skin.stats.comments)}
               </span>
@@ -128,7 +130,11 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
                   version
                 )}`}
               >
-                {version === 'retail' ? '正式服' : version === 'classic' ? '60版' : '80版'}
+                {version === 'retail'
+                  ? t('skinsPage.card.versions.retail')
+                  : version === 'classic'
+                  ? t('skinsPage.card.versions.classic')
+                  : t('skinsPage.card.versions.wrath')}
               </span>
             ))}
             
@@ -154,7 +160,7 @@ export function SkinCard({ skin, onPreview }: SkinCardProps) {
               asChild
               className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium"
             >
-              <Link href={`/skins/${skin.id}`}>查看详情</Link>
+              <Link href={`/skins/${skin.id}`}>{t('skinsPage.card.viewDetails')}</Link>
             </Button>
             <Button
               variant="outline"

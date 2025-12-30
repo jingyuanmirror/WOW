@@ -1,5 +1,68 @@
 export const translations = {
   'zh-CN': {
+    // Skins Page
+    skinsPage: {
+      metadata: {
+        title: '皮肤作品集 | WOW UI Skin Designer',
+        description: '探索专为魔兽世界打造的精美UI皮肤，提升你的游戏体验。支持正式服、60版、80版。',
+      },
+      header: {
+        title: '皮肤作品集',
+        subtitle: '探索专为魔兽世界打造的精美UI皮肤，提升你的游戏体验',
+        totalPrefix: '总计',
+        totalSuffix: '款皮肤',
+        supportText: '支持正式服、60版、80版',
+      },
+      filters: {
+        versionsLabel: '版本:',
+        versions: {
+          retail: '正式服',
+          classic: '60版',
+          wrath: '80版',
+        },
+        sortLabel: '排序:',
+        sortOptions: {
+          default: '默认排序',
+          likes: '喜欢最多',
+          latest: '最新优先',
+          nameAsc: '名称 A-Z',
+          nameDesc: '名称 Z-A',
+        },
+        searchPlaceholder: '搜索皮肤名称...',
+        tagsLabel: '标签:',
+        selectedLabel: '已选择:',
+        clearAll: '清除全部',
+        searchLabel: '搜索',
+      },
+      results: {
+        filteredPrefix: '显示',
+        filteredSuffix: '个结果',
+      },
+      grid: {
+        videoUnsupported: '您的浏览器不支持视频播放',
+        noPreview: '暂无预览',
+        previous: '上一张',
+        next: '下一张',
+        likes: '喜欢',
+        viewDetails: '查看完整详情',
+        emptyTitle: '未找到符合条件的皮肤',
+        emptyDescription: '尝试调整筛选条件或清除所有筛选',
+        previewIndex: '{current} / {total}',
+      },
+      card: {
+        viewDetails: '查看详情',
+        images: '张',
+        videos: '个',
+        likes: '喜欢数',
+        views: '浏览数',
+        comments: '评论数',
+        versions: {
+          retail: '正式服',
+          classic: '60版',
+          wrath: '80版',
+        },
+      },
+    },
     // Navbar
     nav: {
       brand: 'Mang UI',
@@ -188,6 +251,69 @@ export const translations = {
   },
 
   'en-US': {
+    // Skins Page
+    skinsPage: {
+      metadata: {
+        title: 'Skin Portfolio | WOW UI Skin Designer',
+        description: 'Explore beautifully crafted UI skins for World of Warcraft. Supports Retail, Classic, and Wrath.',
+      },
+      header: {
+        title: 'Skin Portfolio',
+        subtitle: 'Explore stunning WoW UI skins to level up your experience',
+        totalPrefix: 'Total',
+        totalSuffix: 'skins',
+        supportText: 'Supports Retail, Classic, and Wrath',
+      },
+      filters: {
+        versionsLabel: 'Version:',
+        versions: {
+          retail: 'Retail',
+          classic: 'Classic (60)',
+          wrath: 'Wrath (80)',
+        },
+        sortLabel: 'Sort:',
+        sortOptions: {
+          default: 'Default',
+          likes: 'Most Liked',
+          latest: 'Newest First',
+          nameAsc: 'Name A-Z',
+          nameDesc: 'Name Z-A',
+        },
+        searchPlaceholder: 'Search skin name...',
+        tagsLabel: 'Tags:',
+        selectedLabel: 'Selected:',
+        clearAll: 'Clear all',
+        searchLabel: 'Search',
+      },
+      results: {
+        filteredPrefix: 'Showing',
+        filteredSuffix: 'results',
+      },
+      grid: {
+        videoUnsupported: 'Your browser does not support video playback',
+        noPreview: 'No preview available',
+        previous: 'Previous',
+        next: 'Next',
+        likes: 'likes',
+        viewDetails: 'View full details',
+        emptyTitle: 'No skins match the filters',
+        emptyDescription: 'Try adjusting or clearing the filters',
+        previewIndex: '{current} / {total}',
+      },
+      card: {
+        viewDetails: 'View details',
+        images: 'images',
+        videos: 'videos',
+        likes: 'Likes',
+        views: 'Views',
+        comments: 'Comments',
+        versions: {
+          retail: 'Retail',
+          classic: 'Classic (60)',
+          wrath: 'Wrath (80)',
+        },
+      },
+    },
     // Navbar
     nav: {
       brand: 'Mang UI',

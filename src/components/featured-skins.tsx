@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -11,8 +11,9 @@ import ImageCarousel from './image-carousel';
 import VideoPlayer from './video-player';
 import SkinInfoPanel from './skin-info-panel';
 import { useTranslation } from '@/lib/i18n/use-translation';
+import useSWR from 'swr';
 
-const FEATURED_SKINS = [
+const FALLBACK_SKINS = [
   {
     id: 1,
     name: '暗影之刃',
@@ -60,11 +61,28 @@ const FEATURED_SKINS = [
   },
 ];
 
+type FeaturedRemoteItem = {
+  id: string;
+  title: string;
+  description: string;
+  quality?: string;
+  status?: string;
+  price?: number | null;
+  priceType?: 'paid' | 'free';
+  tags?: string[];
+  mainImage?: string;
+  backupImages?: string[];
+  sortOrder?: number;
+};
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).then((data) => data.items ?? []);
+
 const QUALITY_COLORS = {
   legendary: 'from-orange-500 to-yellow-500',
   epic: 'from-purple-500 to-pink-500',
   rare: 'from-blue-500 to-cyan-500',
   uncommon: 'from-green-500 to-emerald-500',
+  common: 'from-gray-500 to-zinc-400',
 };
 
 const QUALITY_LABELS = {
@@ -72,6 +90,7 @@ const QUALITY_LABELS = {
   epic: { zh: '史诗', en: 'Epic' },
   rare: { zh: '精良', en: 'Rare' },
   uncommon: { zh: '优秀', en: 'Uncommon' },
+  common: { zh: '优秀', en: 'Common' },
 };
 
 // 根据皮肤ID生成不同的UI主题色
@@ -90,8 +109,37 @@ const getThemeColors = (skinId: number) => {
 
 function FeaturedSkins() {
   const { t, locale } = useTranslation();
-  const [previewSkin, setPreviewSkin] = useState<null | typeof FEATURED_SKINS[0]>(null);
+  const [previewSkin, setPreviewSkin] = useState<null | typeof FALLBACK_SKINS[0]>(null);
   const [previewTab, setPreviewTab] = useState<'image' | 'video'>('image');
+
+  const { data: remoteItems, isLoading, error } = useSWR<FeaturedRemoteItem[]>('/api/featured', fetcher);
+
+  const featuredSkins = useMemo(() => {
+    const source = (remoteItems ?? []).filter((item) => item.status === 'published');
+    const ordered = source.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+    if (!ordered.length) return FALLBACK_SKINS;
+
+    const fallbackImage = FALLBACK_SKINS[0]?.images?.[0]?.url ?? '/images/skin-1-1.webp';
+
+    return ordered.map((item, index) => {
+      const images = [item.mainImage, ...(item.backupImages ?? [])]
+        .filter(Boolean)
+        .map((url, imgIndex) => ({ url: url as string, alt: `${item.title} ${imgIndex + 1}` }));
+
+      return {
+        id: Number(item.id) || index + 1,
+        name: item.title,
+        nameEn: item.title,
+        description: item.description,
+        descriptionEn: item.description,
+        price: item.price ?? 0,
+        quality: (item.quality as keyof typeof QUALITY_COLORS) ?? 'rare',
+        images: images.length ? images : [{ url: fallbackImage, alt: item.title }],
+        video: undefined,
+        features: item.tags ?? [],
+      };
+    });
+  }, [remoteItems]);
 
   return (
     <section className="bg-gradient-to-b from-black via-gray-900 to-black py-24">
@@ -108,9 +156,21 @@ function FeaturedSkins() {
           <p className="text-xl text-gray-400">{t('featuredSkins.subtitle')}</p>
         </motion.div>
 
+        {isLoading && (
+          <div className="mb-4 rounded-lg border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">
+            正在加载精选内容...
+          </div>
+        )}
+
+        {error && (
+          <div className="mb-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-100">
+            精选数据加载失败，已回退到本地示例。
+          </div>
+        )}
+
         {/* Skins Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {FEATURED_SKINS.map((skin, index) => (
+          {featuredSkins.map((skin, index) => (
             <motion.div
               key={skin.id}
               initial={{ opacity: 0, y: 30 }}

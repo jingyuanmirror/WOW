@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "title": "Dark Knight Skin",
+    "description": "黑暗骑士主题皮肤，炫彩特效",
+    "quality": "legendary",
+    "status": "published",
+    "priceType": "paid",
+    "price": 29.99,
+    "tags": ["职业", "暗黑风"],
+    "mainImage": "https://via.placeholder.com/400x300?text=Dark+Knight",
+    "backupImages": [],
+    "sortOrder": 1,
+    "publishAt": null,
+    "updatedAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Celestial Dream",
+    "description": "梦幻星空主题，粒子特效",
+    "quality": "epic",
+    "status": "published",
+    "priceType": "free",
+    "price": null,
+    "tags": ["梦幻", "特效"],
+    "mainImage": "https://via.placeholder.com/400x300?text=Celestial",
+    "backupImages": [],
+    "sortOrder": 2,
+    "publishAt": null,
+    "updatedAt": "2024-01-16T14:20:00Z"
+  }
+]

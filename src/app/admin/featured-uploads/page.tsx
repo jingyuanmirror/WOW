@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,6 +23,7 @@ import {
   ArrowUpDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import useSWR from 'swr';
 
 type Status = 'published' | 'draft' | 'offline' | 'deleted';
 type Quality = 'legendary' | 'epic' | 'rare' | 'common';
@@ -43,6 +44,8 @@ interface FeaturedItem {
   publishAt: string | null;
   updatedAt: string;
 }
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).then((data) => data.items ?? []);
 
 const initialData: FeaturedItem[] = [
   {
@@ -118,7 +121,11 @@ const statusLabel = {
 const tagOptions = ['职业', '暗黑风', '梦幻', '特效', '武器', '坐骑'];
 
 export default function FeaturedUploadsPage() {
-  const [items, setItems] = useState<FeaturedItem[]>(initialData);
+  const { data: remoteItems, isLoading: loading, error: remoteError, mutate } = useSWR<FeaturedItem[]>('/api/featured', fetcher, {
+    fallbackData: initialData,
+  });
+
+  const [items, setItems] = useState<FeaturedItem[]>(remoteItems ?? initialData);
   const [draft, setDraft] = useState<FeaturedItem>(blankDraft);
   const [showDrawer, setShowDrawer] = useState(false);
   const [search, setSearch] = useState('');
@@ -129,6 +136,32 @@ export default function FeaturedUploadsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (remoteItems) setItems(remoteItems);
+  }, [remoteItems]);
+
+  const persist = async (nextItems: FeaturedItem[]) => {
+    const res = await fetch('/api/featured', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: nextItems }),
+    });
+
+    if (!res.ok) {
+      let message = '保存失败';
+      try {
+        const payload = await res.json();
+        if (payload?.error) message = payload.error;
+      } catch {
+        // ignore json parse error
+      }
+      throw new Error(message);
+    }
+
+    setItems(nextItems);
+    mutate(nextItems, false);
+  };
 
   const filtered = useMemo(() => {
     return items.filter((item) => {
@@ -152,15 +185,18 @@ export default function FeaturedUploadsPage() {
       if (!draft.title.trim()) throw new Error('标题不能为空');
       if (!draft.mainImage) throw new Error('主图不能为空');
 
+      let nextItems: FeaturedItem[] = [];
       if (draft.id) {
-        setItems((prev) => prev.map((item) => (item.id === draft.id ? { ...draft, updatedAt: new Date().toISOString() } : item)));
+        nextItems = items.map((item) => (item.id === draft.id ? { ...draft, updatedAt: new Date().toISOString() } : item));
       } else {
         const newItem = { ...draft, id: Date.now().toString(), updatedAt: new Date().toISOString() };
-        setItems((prev) => [newItem, ...prev]);
+        nextItems = [newItem, ...items];
       }
 
+      await persist(nextItems);
       setShowDrawer(false);
       setDraft(blankDraft);
+      setSelected(new Set());
     } catch (err) {
       setError(err instanceof Error ? err.message : '保存失败');
     } finally {
@@ -182,29 +218,63 @@ export default function FeaturedUploadsPage() {
     reader.readAsDataURL(file);
   };
 
-  const handleStatusChange = (ids: string[], status: Status) => {
-    setItems((prev) => prev.map((item) => (ids.includes(item.id) ? { ...item, status } : item)));
+  const handleStatusChange = async (ids: string[], status: Status) => {
+    setSaving(true);
+    setError('');
+    try {
+      const next = items.map((item) => (ids.includes(item.id) ? { ...item, status } : item));
+      await persist(next);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '更新失败');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleDelete = (ids: string[]) => {
-    setItems((prev) => prev.filter((item) => !ids.includes(item.id)));
-    setSelected(new Set());
+  const handleDelete = async (ids: string[]) => {
+    setSaving(true);
+    setError('');
+    try {
+      const next = items.filter((item) => !ids.includes(item.id));
+      await persist(next);
+      setSelected(new Set());
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '删除失败');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleDuplicate = (item: FeaturedItem) => {
-    const newItem = {
-      ...item,
-      id: Date.now().toString(),
-      title: `${item.title} (副本)`,
-      status: 'draft' as Status,
-    };
-    setItems((prev) => [newItem, ...prev]);
+  const handleDuplicate = async (item: FeaturedItem) => {
+    setSaving(true);
+    setError('');
+    try {
+      const newItem = {
+        ...item,
+        id: Date.now().toString(),
+        title: `${item.title} (副本)`,
+        status: 'draft' as Status,
+      };
+      const next = [newItem, ...items];
+      await persist(next);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '复制失败');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleSortBump = (id: string, delta: number) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, sortOrder: Math.max(0, item.sortOrder + delta) } : item))
-    );
+  const handleSortBump = async (id: string, delta: number) => {
+    setSaving(true);
+    setError('');
+    try {
+      const next = items.map((item) => (item.id === id ? { ...item, sortOrder: Math.max(0, item.sortOrder + delta) } : item));
+      await persist(next);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '更新排序失败');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const toggleSelect = (id: string) => {
@@ -240,6 +310,18 @@ export default function FeaturedUploadsPage() {
             <Plus className="w-4 h-4 mr-2" /> 新增作品
           </Button>
         </div>
+
+        {loading && (
+          <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">
+            正在加载最新数据...
+          </div>
+        )}
+
+        {remoteError && (
+          <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+            数据加载失败，请稍后重试
+          </div>
+        )}
 
         <Card className="bg-zinc-900/70 border-zinc-800">
           <CardHeader className="gap-3">
